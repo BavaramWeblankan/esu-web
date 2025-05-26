@@ -1,4 +1,87 @@
 @import "@/styles/global.scss";
+<<<<<<< Updated upstream
+=======
+// Add at the end of your style.scss
+
+.member-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member-modal-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  text-align: left;
+  padding: 5% 3%;
+
+  .member-image {
+    flex-shrink: 0;
+  }
+  .member-modal-details {
+    flex: 1;
+    h2{
+      font-size: 16px;
+      
+    }
+    .qualification {
+       font-size: 16px;
+          color: #949494 !important;
+      }
+  
+  }
+}
+.member-image-modal{
+  width:65px !important;
+  height:65px !important;
+}
+.member-modal {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  max-width: 90vw;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.member-modal-header {
+  flex-shrink: 0;
+}
+
+.member-modal-body {
+  overflow-y: auto;
+  max-height: 60vh; // Adjust as needed
+  margin-top: 20px;
+  flex-grow: 1;
+    padding: 0% 5%;
+}
+.close-btn {
+  position: absolute;
+  top: 0%;
+  right: 2%;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.member-message {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #333;
+  text-align: justify;
+}
+>>>>>>> Stashed changes
 
 .member-card {
   flex-wrap: wrap;
@@ -63,9 +146,17 @@
   .member-card {
     width: 49%;
   }
+  .member-image-modal{
+    width:95px !important;
+    height:95px !important;
+  }
 }
 
 @media only screen and (min-width: 992px) {
+   .member-image-modal{
+    width:105px !important;
+    height:105px !important;
+  }
   .member-card {
     border-radius: get-vw(19.938px);
     border: get-vw(0.997px) solid #d9d9d9;
@@ -125,9 +216,98 @@
       padding: get-vw(90px) get-vw(151px);
     }
   }
+  .member-modal-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-align: left;
+  padding: 2% 3%;
+
+  .member-image {
+    flex-shrink: 0;
+  }
+  .member-modal-details {
+    flex: 1;
+    h2{
+      font-size: 21px;
+      
+    }
+    .qualification {
+       font-size:21px;
+          color: #949494 !important;
+      }
+  }
+}
+.member-message {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+}
 }
 
 @media only screen and (min-width: 1200px) {
+ .member-image-modal{
+    width:135px !important;
+    height:135px !important;
+  }
+.member-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member-modal-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-align: left;
+  padding: 2% 3%;
+
+  .member-image {
+    flex-shrink: 0;
+  }
+  .member-modal-details {
+    flex: 1;
+    h2{
+      font-size: 25px;
+      
+    }
+    .qualification {
+       font-size:25px;
+          color: #949494 !important;
+      }
+  }
+}
+.member-modal {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  max-width: 90vw;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.member-modal-header {
+  flex-shrink: 0;
+}
+
+.member-modal-body {
+  overflow-y: auto;
+  max-height: 60vh; // Adjust as needed
+  margin-top: 20px;
+  flex-grow: 1;
+    padding: 0% 5%;
+}
   .landing-results-inner.academics-mamber-group .member-card {
     width: 32%;
   }
