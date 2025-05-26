@@ -78,7 +78,7 @@ export default function HomeCourses() {
 
   return (
     <section className="home-courses">
-      <div className="main-wrap-title">
+      <div className="main-wrap-title" data-aos="flip-down" >
         <div className="title-wrap">
           <TitleLarge title="Explore" subtitle="Our Courses" />
         </div>
@@ -86,7 +86,7 @@ export default function HomeCourses() {
           <Button buttonName="Explore" buttonUrl="/courses" />
         </div>
       </div>
-      <div className="slider-wrap">
+      <div className="slider-wrap" data-aos="fade-up" >
         <Slider {...settings} className="courses-slider">
           {courses.map((course) => (
             <div key={course.id} className="item">

@@ -19,7 +19,7 @@ const CourseOverview: React.FC<CourseOverviewProps> = ({ course }) => {
         value={color}
         onChange={(e) => setColor(e.target.value)}
       /> */}
-      <div className="course-details-wrapper">
+      <div className="course-details-wrapper" data-aos="zoom-in" >
         <div id="section1" className="related-coures-div course-title">
           <h5>
             <span>

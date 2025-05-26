@@ -25,6 +25,7 @@ const TabsWithImages: React.FC<TabsWithImagesProps> = ({ tabData }) => {
   const [activeTab, setActiveTab] = useState(tabData[0]?.id || "");
   const [search, setSearch] = useState("");
   const { color, setColor } = useTheme();
+  const [clickedTab, setClickedTab] = useState(""); // track last clicked tab
 
   // Set default active tab when tabData is available
   useEffect(() => {
@@ -88,11 +89,14 @@ const TabsWithImages: React.FC<TabsWithImagesProps> = ({ tabData }) => {
               <button
                 className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
                 onClick={() => {
-                  {
-                    activeTab === tab.id
-                      ? handleRedirect(tab.buttonUrl)
-                      : setActiveTab(tab.id),
-                      setColor(tab.color);
+                  if (activeTab === tab.id && clickedTab === tab.id) {
+                    // Second click on same active tab: redirect
+                    handleRedirect(tab.buttonUrl);
+                  } else {
+                    // First click: just activate
+                    setActiveTab(tab.id);
+                    setClickedTab(tab.id);
+                    setColor(tab.color);
                   }
                 }}
                 style={{
@@ -101,12 +105,12 @@ const TabsWithImages: React.FC<TabsWithImagesProps> = ({ tabData }) => {
                       ? tab.color
                       : "rgba(186, 186, 186, 0.65)",
                 }}
-                // dangerouslySetInnerHTML={{ __html: tab.buttonName }}
               >
-                {/* {activeTab === tab.id ? "Visit Faculty" : tab.buttonName} */}
                 {tab.buttonName}
                 &nbsp; &nbsp;
-                {activeTab === tab.id ? <FaArrowUpRightFromSquare /> : ""}
+                {activeTab === tab.id && clickedTab === tab.id && (
+                  <FaArrowUpRightFromSquare />
+                )}
               </button>
             </li>
           ))}

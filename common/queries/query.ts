@@ -489,6 +489,7 @@ export const VICE_CHANCELLOR_QUERY = `
           staffAcf {
             designation
             message
+            viceChancellorMessage
           }
           title
           featuredImage {
@@ -503,25 +504,26 @@ export const VICE_CHANCELLOR_QUERY = `
 }
 `;
 
-export const PRO_VICE_CHANCELLOR_QUERY = `
- query  {
-    staffType(id: "pro-vice-chancellor", idType: SLUG) {
-      staffs {
-        nodes {
-          staffAcf {
-            designation
-            message
-          }
-          title
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
+export const CAMPUS_VICE_CHANCELLOR_QUERY = `
+query($slug: ID!) {
+  staffType(id: $slug, idType: SLUG) {
+    staffs {
+      nodes {
+        staffAcf {
+          designation
+          message
+          viceChancellorMessage
+        }
+        title
+        featuredImage {
+          node {
+            sourceUrl
+            altText
           }
         }
       }
     }
+  }
 }
 `;
 
@@ -742,3 +744,245 @@ export const OUR_STRATEGIC_TEAM = `
     }
   }
 `;
+
+export const GET_ALL_PUBLICATIONS = `
+query {
+  publications(first: 100) {
+    nodes {
+      title
+      slug
+      content
+      date
+      research {
+        pdf {
+          node {
+            file
+            filePath
+            sourceUrl
+          }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      blogs {
+        gallery {
+          nodes {
+            altText
+            sourceUrl
+          }
+        }
+      }
+      publicationType {
+        nodes {
+          name
+          slug
+          count
+        }
+      }
+    }
+  }
+}
+`;
+
+export const GET_PUBLICATIONS_BY_SLUG = `
+query($slug: ID!) {
+  publication(id: $slug, idType: SLUG) {
+    title
+      slug
+      content
+      date
+      research {
+        pdf {
+          node {
+            file
+            filePath
+            sourceUrl
+          }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      blogs {
+        gallery {
+          nodes {
+            altText
+            sourceUrl
+          }
+        }
+      }
+      publicationType {
+        nodes {
+          name
+          slug
+          count
+        }
+      }
+    }
+}
+`;
+
+export const HOME_LATEST_NEWS = `
+query MyQuery {
+  news(first: 6) {
+    nodes {
+     title
+      slug
+      content
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+  }
+}
+`;
+
+export const GET_ALL_NEWS = `
+query GetNews($first: Int = 6, $after: String) {
+  news(first: $first, after: $after) {
+    nodes {
+      title
+      slug
+      content
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+`;
+
+export const GET_ALL_BLOGS = `
+  query Blogs($first: Int = 6, $after: String) {
+    news: blogs(first: $first, after: $after) {
+      nodes {
+        title
+        slug
+        content
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
+export const GET_NEWS_BY_SLUG = `
+query($slug: ID!) {
+  new(
+    id: $slug
+    idType: SLUG
+  ) {
+    content
+    date
+    title
+    slug
+    news {
+      date
+      gallery {
+        nodes {
+          altText
+          sourceUrl
+        }
+      }
+    }
+    featuredImage {
+      node {
+        altText
+        sourceUrl
+      }
+    }
+  }
+}
+`;
+
+export const GET_BLOGS_BY_SLUG = `
+query GetBlogBySlug($slug: ID!) {
+  blog(id: $slug, idType: SLUG) {
+    content
+    date
+    title
+    slug
+    blogs {
+      gallery {
+        nodes {
+          altText
+          sourceUrl
+        }
+      }
+    }
+    featuredImage {
+      node {
+        altText
+        sourceUrl
+      }
+    }
+  }
+}
+`;
+
+export const GET_MENU_COURSE_BY_SLUG_SELECTED = `
+query($slug: ID!) {
+  schoolType(id: $slug, idType: SLUG) {
+    name
+    courses {
+      nodes {
+        title
+        slug
+        courses {
+          enableCourseInTheMenu
+        }
+      }
+    }
+  }
+}
+`;
+
+// export const GET_MENU_COURSE_BY_SLUG_SELECTED = `
+// query($slug: ID!) {
+//   staffType(id: $slug, idType: SLUG) {
+//     staffs {
+//       nodes {
+//         title
+//         staffAcf {
+//           designation
+//           message
+//         }
+//         featuredImage {
+//           node {
+//             sourceUrl
+//             altText
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// `;

@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const ContactHeadOffice = () => {
   return (
-    <section className="headoffice-section position-relative">
+    <section className="headoffice-section position-relative" >
       <div className="headoffice-section-wrap">
-        <div className="headoffice-title-wrap">
+        <div className="headoffice-title-wrap" data-aos="zoom-in">
           <h2 className="headoffice-title">
             BUILD <br></br>{" "}
             <span>
@@ -20,7 +20,7 @@ const ContactHeadOffice = () => {
             height={707}
           />
         </div>
-        <div className="headoffice-details">
+        <div className="headoffice-details" data-aos="fade-up">
           <div className="single-branch">
             <h3 className="branch-title">General Inquiries</h3>
             <div className="branch-details">

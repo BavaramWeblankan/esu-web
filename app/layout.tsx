@@ -66,9 +66,9 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title:
-    "Education Institute in Sri Lanka | Sri Lanka Private University | ESOFT Uni",
+    "ESU - Sri Lanka's Premier Uni for Higher Education Excellence!",
   description:
-    "At ESOFT Uni, we're committed to providing a transformative learning experience. With programs in ICT and other degree courses, our education institutes in Sri Lanka are widespread.",
+    "ESU - Sri Lanka's Premier Uni for Higher Education Excellence!",
 };
 
 export default function RootLayout({

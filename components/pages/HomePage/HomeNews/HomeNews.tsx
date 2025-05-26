@@ -6,132 +6,90 @@ import Image from "next/image";
 import TitleLarge from "@/components/common/TitleLarge/TitleLarge";
 import Button from "@/components/common/Button/Button";
 import { useTheme } from "@/lib/ThemeContext";
+import { NewsEvents } from "@/common/interfaces/interface";
+import { graphQLClient } from "@/lib/graphql-client";
+import { HOME_LATEST_NEWS } from "@/common/queries/query";
 
 const HomeNews = () => {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState<NewsEvents[]>([]);
   const { color } = useTheme();
-  // Optional: Fetch logic (currently unused, placeholder)
+  const [activeIndex, setActiveIndex] = useState(0); // Add this state
+
+
+  const fetchNewsEvents = async () => {
+    const data = await graphQLClient.request<{
+      news: {
+        nodes: NewsEvents[];
+        pageInfo: {
+          endCursor: string;
+          hasNextPage: boolean;
+        };
+      };
+    }>(HOME_LATEST_NEWS);
+
+    setNews(data.news.nodes);
+  };
+
   useEffect(() => {
-    // You can fetch and set dynamic news here
-    // setNews(fetchedData);
+    fetchNewsEvents();
   }, []);
+
+  // Main news is the first item, sidebar is the rest
+const mainNews = news[activeIndex];
+
 
   return (
     <>
       <section className="home-news-section">
-        <div className="home-news-section-wrap">
-          <div className="title-wrap text-center">
-            <TitleLarge title="Latest" subtitle="&nbsp; News" />
-            {/* <div className="all-news-wrap">
-              <Button buttonName="View All News" buttonUrl="/#" />
-            </div> */}
-          </div>
-          <div className="news-container">
+      <div className="home-news-section-wrap">
+        <div className="title-wrap text-center" data-aos="flip-down" >
+          <TitleLarge title="Latest" subtitle="&nbsp; News" />
+        </div>
+        <div className="news-container" data-aos="fade-up" >
+          {mainNews && (
             <div className="news-main pos-relative">
-              <a href="">
+              <a href={`/news/${mainNews.slug}`}>
                 <Image
-                  src="/images/news.png"
-                  alt="Main News"
+                  src={mainNews.featuredImage?.node?.sourceUrl || "/images/news.png"}
+                  alt={mainNews.featuredImage?.node?.altText || mainNews.title}
                   width={800}
                   height={400}
                   className="news-image"
                 />
                 <div className="news-content pos-absolute">
-                  <p className="news-date">📅 May 6, 2025</p>
-                  <h3 className="news-title">
-                    ESOFT Celebrates Young ICT Talent at National Level
-                    Information and Communication Technology Champions Awards
-                  </h3>
+                  <p className="news-date">
+                    📅 {mainNews.date ? new Date(mainNews.date).toLocaleDateString() : ""}
+                  </p>
+                  <h3 className="news-title">{mainNews.title}</h3>
                 </div>
               </a>
             </div>
+          )}
 
-            <div className="news-sidebar">
-              <div className="news-sidebar-item">
-                <a href="">
-                  <p className="news-date">📅 04 May 2025</p>
-                  <p className="news-subtitle">
-                    Awurudu Celebrations at ESOFT Branches Nationwide
-                  </p>
-                </a>
-              </div>
-              <div
-                className="news-sidebar-item active"
-                style={{ backgroundColor: color }}
-              >
-                <a href="">
-                  <p className="news-date">📅 06 May 2025</p>
-                  <p className="news-subtitle">
-                    ESOFT Celebrates Young ICT Talent at National Level
-                    Information and Communication Technology Champions Awards
-                  </p>
-                </a>
-              </div>
-              <div className="news-sidebar-item">
-                <a href="">
-                  <p className="news-date">📅 07 May 2025</p>
-                  <p className="news-subtitle">
-                    Dr. Dayan Rajapakse Appointed Chairman of FITIS at 8th Annual General Meeting
-                  </p>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* <section className="home-news-section">
-      <div className="small-middle-wrap">
-        <div className="title-wrap text-center">
-          <TitleLarge title="Latest" subtitle="News & Events" />
-        </div>
-
-        <div className="news-container">
-          <div className="news-main">
-            <Image
-              src="/images/news.png"
-              alt="Main News"
-              width={200}
-              height={150}
-              className="news-image"
-            />
-            <div className="news-content">
-              <p className="news-date">📅 May 6, 2025</p>
-              <h3 className="news-title">
-                ESOFT Celebrates Young ICT Talent at National Level Information
-                and Communication Technology Champions Awards
-              </h3>
-              <p className="news-description">
-                The National Level ICT Champions Awards 2024 took place on 28th
-                April 2025 at the Ministry of Education Auditorium[...]
-              </p>
-              <button className="read-more">Read More</button>
-            </div>
-          </div>
-
-          <div className="news-sidebar">
-            <div className="news-sidebar-item">
-              <p className="news-date">📅 16 August 2023</p>
-              <p className="news-subtitle">
-                London Metropolitan Inaugural Ceremony 2023
-              </p>
-            </div>
-            <div className="news-sidebar-item active">
-              <p className="news-date">📅 16 August 2023</p>
-              <p className="news-subtitle">
-                Inaugural Ceremony Kingston University BSc. Top-Up Programme
-              </p>
-            </div>
-            <div className="news-sidebar-item">
-              <p className="news-date">📅 16 August 2023</p>
-              <p className="news-subtitle">
-                ESOFT Metro Campus And Melsta Hospitals Inked MOU
-              </p>
-            </div>
+          {/* Sidebar News */}
+          <div className="news-sidebar" data-aos="fade-up">
+            {news.map((item, idx) => {
+              // if (idx === activeIndex) return null; // Don't show main news in sidebar
+              return (
+                <div
+                  className={`news-sidebar-item${idx == activeIndex ? " active" : ""}`}
+                  key={item.slug || idx}
+                  style={idx === activeIndex ? { backgroundColor: color } : {}}
+                  onClick={() => setActiveIndex(idx)} // Change main news on click
+                >
+                  <div>
+                    <p className="news-date">
+                      📅 {item.date ? new Date(item.date).toLocaleDateString() : ""}
+                    </p>
+                    <p className="news-subtitle">{item.title}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-    </section> */}
+    </section>
     </>
   );
 };

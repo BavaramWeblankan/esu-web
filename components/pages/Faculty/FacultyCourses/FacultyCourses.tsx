@@ -61,12 +61,12 @@ export default function FacultyCourses({ slug }: FacultyCoursesProps) {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 2000,
     arrows: true,
     responsive: [
       {

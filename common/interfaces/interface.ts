@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export interface FeeInterface {
   currency: string;
   price: string;
@@ -33,4 +35,116 @@ export interface FeePlanInterface {
 export interface TitleInterface {
   title: string;
   subtitle: string;
+}
+
+export interface Publication {
+  title: string;
+  slug: string;
+  content: string;
+  date: string;
+  research: {
+    pdf: {
+      node: {
+        file: string;
+        filePath: string;
+        sourceUrl: string;
+      };
+    };
+  };
+  featuredImage: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+  blogs: {
+    gallery: {
+      nodes: {
+        altText: string;
+        sourceUrl: string;
+      }[];
+    };
+  };
+  publicationType: {
+    nodes: {
+      name: string;
+      slug: string;
+      count: number;
+    }[];
+  };
+}
+
+export interface NewsEvents {
+  title: string;
+  slug: string;
+  date: string;
+  content: string;
+  featuredImage: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+  news: {
+    date: string;
+    gallery: {
+      nodes: {
+        altText: string;
+        sourceUrl: string;
+      }[];
+    };
+  };
+}
+
+export interface InterfaceBlogs {
+  title: string;
+  slug: string;
+  date: string;
+  content: string;
+  featuredImage: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+  blogs?: {
+    gallery: {
+      nodes: {
+        altText: string;
+        sourceUrl: string;
+      }[];
+    };
+  };
+}
+
+export interface CoursesMenu {
+  name: string;
+  title: string;
+  slug: string;
+  courses: {
+    nodes: {
+      title: string;
+      slug: string;
+      courses: {
+        enableCourseInTheMenu: boolean;
+      };
+    };
+  };
+}
+
+export interface CourseNode {
+  title: string;
+  slug: string;
+  courses: {
+    enableCourseInTheMenu: boolean;
+  };
+}
+
+export interface CourseMenuResponse {
+  schoolType: {
+    name: string;
+    courses: {
+      nodes: CourseNode[];
+    };
+  };
 }

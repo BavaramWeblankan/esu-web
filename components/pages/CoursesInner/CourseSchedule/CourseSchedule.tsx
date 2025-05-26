@@ -52,13 +52,14 @@ const CourseSchedule: React.FC<ScheduleProps> = ({ schedule }) => {
   //console.log(filteredBatches);
 
   return (
-    <div className="course-details-wrapper">
+    <div className="course-details-wrapper" data-aos="zoom-in">
       <div id="section5" className="related-coures-div course-title">
         <h5>
           <span>
             Course <span style={{ color }}>Schedule</span>
           </span>
         </h5>
+        <hr className="course-title-hr" />
       </div>
       <div>
         <div className="custom-select-wrapper">
@@ -66,6 +67,8 @@ const CourseSchedule: React.FC<ScheduleProps> = ({ schedule }) => {
             className="branch-select"
             name="select_branch"
             id="select_branch"
+            value={selectedBranch}
+            onChange={(e) => setSelectedBranch(e.target.value)}
           >
             <option value="">Select Branch</option>
             <option value="Colombo">Colombo</option>

@@ -29,7 +29,7 @@ interface Course {
 const CourseItem: React.FC<{ course: Course }> = ({ course }) => {
 
   return (
-    <div className="course-box-wrap" key={course.id}>
+    <div className="course-box-wrap" key={course.id} data-aos="zoom-in">
       <Link
         className="course-box"
         href={{

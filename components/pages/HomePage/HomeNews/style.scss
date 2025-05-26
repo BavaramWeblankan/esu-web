@@ -1,92 +1,4 @@
 @import "@/styles/global.scss";
-// .news-container {
-//   display: flex;
-//   gap: 20px;
-//   padding: 20px;
-//   background-color: #f7f9fb;
-//   border-radius: 12px;
-//   flex-wrap: wrap;
-// }
-
-// .news-main {
-//   flex: 2;
-//   background: #fff;
-//   border-radius: 12px;
-//   padding: 20px;
-//   display: flex;
-//   gap: 20px;
-//   align-items: flex-start;
-
-//   .news-image {
-//     width: 200px;
-//     height: 150px;
-//     object-fit: cover;
-//     border-radius: 10px;
-//   }
-
-//   .news-content {
-//     flex: 1;
-
-//     .news-date {
-//       font-size: 14px;
-//       color: #888;
-//       margin-bottom: 10px;
-//     }
-
-//     .news-title {
-//       font-size: 18px;
-//       font-weight: bold;
-//       margin-bottom: 10px;
-//     }
-
-//     .news-description {
-//       font-size: 14px;
-//       color: #555;
-//       margin-bottom: 10px;
-//     }
-
-//     .read-more {
-//       background-color: #4aa7c9;
-//       color: #fff;
-//       padding: 8px 14px;
-//       border: none;
-//       border-radius: 6px;
-//       cursor: pointer;
-//     }
-//   }
-// }
-
-// .news-sidebar {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-
-//   .news-sidebar-item {
-//     background: #fff;
-//     padding: 15px;
-//     border-radius: 10px;
-//     font-size: 14px;
-//     color: #333;
-
-//     .news-date {
-//       color: #888;
-//       font-size: 12px;
-//       margin-bottom: 4px;
-//     }
-
-//     &.active {
-//       background-color: #4aa7c9;
-//       color: #fff;
-
-//       .news-date {
-//         color: #fff;
-//       }
-//     }
-//   }
-// }
-
-
 .home-news-section {
   padding-bottom: 40px;
   .home-news-section-wrap {
@@ -101,17 +13,10 @@
 
     .news-container {
       .news-main {
-        position: relative;
-        &::after{
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(0deg, #0A0A0C 0.09%, rgba(10, 10, 12, 0.84) 17.87%, rgba(10, 10, 12, 0.00) 38.38%);
-          border-radius: 20px;
-        }
+         position: relative; // or use your .pos-relative class
+         max-height: 300px;
+        // overflow: hidden;
+        
         .news-image {
           width: 100%;
           height: 300px;
@@ -120,11 +25,22 @@
         }
 
         .news-content {
-          padding: 20px;
-          position: absolute;
-          bottom: 0;
-          z-index: 99;
+         position: absolute;
+           bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 32px 24px 20px;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.85) 30%,
+            rgba(0, 0, 0, 0.6) 60%,
+            rgba(0, 0, 0, 0.3) 75%,
+            rgba(0, 0, 0, 0) 100%
+          );
           color: #fff;
+          z-index: 2;
+          border-radius: 0px;
+
 
 
           .news-date {
@@ -140,13 +56,22 @@
       }
 
       .news-sidebar {
+        overflow: scroll;
         padding: 20px;
+        max-height: 300px;
         .news-sidebar-item {
+
           border-radius: 7.965px;
           border: 0.531px solid rgba(0, 0, 0, 0.12);
           background: #FFF;
           margin-bottom: 10px;
           padding: 15px 20px;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.10); // Add this line for subtle shadow
+          cursor: pointer;
+          &.active {
+            // ...existing code...
+            box-shadow: 0 4px 16px rgba(2, 174, 201, 0.25); // Stronger shadow for active
+          }
           a{
             text-decoration: none;
             color: initial;
@@ -193,15 +118,15 @@
 
     .news-container {
       .news-main {
-        
+         max-height: 500px;
 
         .news-image {
-              height: auto;
+              height: 500px;
         }
 
         .news-content {
           position: absolute;
-
+border-radius: 20px;
           .news-date {
           }
 
@@ -211,6 +136,8 @@
       }
 
       .news-sidebar {
+        overflow: scroll;
+        max-height: 500px;
         .news-sidebar-item {
           .news-date {
           }
@@ -243,18 +170,34 @@
           display: flex;
           justify-content: space-between;
       .news-main {
-        width: get-vw(1025px);
-
+          width: get-vw(1025px);
+          position: relative; // or use your .pos-relative class
+          overflow: hidden;
+          max-height: 600px;
         .news-image {
-              height: auto;
+              height: 600px;
               border-radius: 20px;
               background: linear-gradient(180deg, #0A0A0C 0.09%, rgba(10, 10, 12, 0.84) 17.87%, rgba(10, 10, 12, 0.00) 38.38%);
 
         }
 
         .news-content {
-          position: absolute;
-          padding: 0 get-vw(66px) get-vw(66px) !important;
+          // position: absolute;
+          // padding: 0 get-vw(66px) get-vw(66px) !important;
+           position: absolute;
+           border-radius: 20px;
+            left: 0;
+            right: 0;
+            padding: 32px 24px 20px;
+            background: linear-gradient(
+              to top,
+              rgba(0, 0, 0, 0.85) 30%,
+              rgba(0, 0, 0, 0.6) 60%,
+              rgba(0, 0, 0, 0.3) 75%,
+              rgba(0, 0, 0, 0) 100%
+            );
+            color: #fff;
+            z-index: 2;
           .news-date {
             font-size: get-vw(18px);
             font-style: normal;
@@ -273,9 +216,13 @@
       }
 
       .news-sidebar {
+        overflow: scroll;
         width: calc(100% - get-vw(1050px));
+         max-height: 600px;
+         
         padding: 0;
         .news-sidebar-item {
+          
           padding: get-vw(30px) get-vw(30px);
           .news-date {
             font-size: get-vw(18px);
@@ -300,6 +247,6 @@
 }
 }
 
-.news-container {
-    pointer-events: none;
-}
+// .news-container {
+//     pointer-events: none;
+// }

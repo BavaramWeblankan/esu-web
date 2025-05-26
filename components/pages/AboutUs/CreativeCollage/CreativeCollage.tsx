@@ -22,8 +22,8 @@ const CreativeCollage: React.FC<CreativeCollageProps> = ({ slug }) => {
   // }
 
   return (
-    <section className="creative-collage">
-      <TitleLarge title="Faculty" subtitle=" Highlights" />
+    <section className="creative-collage" data-aos="zoom-in" >
+      <TitleLarge title="Campus" subtitle=" Highlights" />
       <br />
       <br />
       <div className="grid-wrapper">

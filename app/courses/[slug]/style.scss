@@ -10,6 +10,18 @@
   font-family: var(--font-poppins);
 }
 
+.course-description-wrapper {
+  padding: 50px;
+}
+
+.course-title-hr {
+  background-color: #908f8f;
+  width: 100%;
+  height: 3px;
+  margin: 5px 0;
+  border: 1px solid #908f8f;
+}
+
 .left-course {
   .course-box-wrap {
     width: 100% !important;
@@ -37,6 +49,45 @@
     font-weight: 700;
     line-height: normal;
     letter-spacing: -0.8px;
+  }
+}
+
+.course-inner-details-box {
+  .toggle-buttons {
+    button {
+      font-size: 12px;
+    }
+  }
+}
+
+.hnd-top-up-toogle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.toggle-buttons {
+  display: inline-flex;
+  border-radius: 8px;
+  background-color: #e5e5e5;
+  padding: 4px;
+
+  button {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 600;
+    color: #666;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-size: 14px;
+
+    &.active {
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      color: #000;
+    }
   }
 }
 

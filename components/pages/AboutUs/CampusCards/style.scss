@@ -1,134 +1,186 @@
 @import "@/styles/global.scss";
 
 .campus-section {
-    padding: 20px 16px;
+  padding: 20px 16px;
 }
 
 .campus-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .campus-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 16px;
-    min-height: 640px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 640px;
+ margin: 0 auto;
+  background: #fff;
+  transition: 
+    transform 0.25s cubic-bezier(0.4,0,0.2,1),
+    box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    // border: 2px dashed #c2d647;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, border-color 0.3s;
+    z-index: 2;
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 24px rgba(194,214,71,0.13), 0 2px 8px rgba(0,0,0,0.08);
+
+    &::after {
+      opacity: 1;
+      border-color: #c2d647;
+    }
 
     .campus-image {
-        width: 100%;
-        display: block;
-        border-radius: 16px;
-        height: 100%;
-        object-fit: cover;
-        position: absolute;
+      filter: brightness(0.96); // only slight darken, no blur
+      transform: scale(1.03);
+      transition: filter 0.3s, transform 0.3s;
     }
 
-    .campus-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 50px 20px 20px;
-        background: linear-gradient(to top, rgb(0 0 0 / 94%), #00000061 70%);
-        color: #fff;
-        border-radius: 0 0 16px 16px;
-
-        .campus-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .campus-description {
-            font-size: 14px;
-            color: #c2d647;
-            margin-bottom: 10px;
-        }
-
-        .campus-arrow {
-            font-size: 20px;
-            color: #000;
-            background: #c2d647;
-            padding: 10px;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .campus-arrow {
+      transform: rotate(315deg) scale(1.08);
+      box-shadow: 0 2px 8px rgba(194,214,71,0.13);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
+  }
+  .campus-image {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+  }
+
+  .campus-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 50px 20px 20px;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 30%,
+      rgba(0, 0, 0, 0.6) 60%,
+      rgba(0, 0, 0, 0.3) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    color: #fff;
+    border-radius: 0 0 16px 16px;
+
+    .campus-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .campus-description {
+      font-size: 14px;
+      color: #c2d647;
+      margin-bottom: 10px;
+    }
+
+    .campus-arrow {
+      font-size: 20px;
+      color: #000;
+      background: #c2d647;
+      padding: 10px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      transform: rotate(315deg); // ⬅️ Rotates to point northeast
+    }
+  }
 }
 
 // Tablet
 @media screen and (min-width: 768px) {
-    .campus-grid {
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 24px;
-    }
+  .campus-grid {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+  }
 
-    .campus-card {
-        flex: 1;
-    }
+  .campus-card {
+    flex: 1;
+  }
 }
-
+@media screen and (max-width: 768px) {
+  .campus-grid {
+    display:block;
+    padding:5%;
+  }
+   .campus-card {
+   margin-bottom:5%;
+  }
+}
 // Desktop
 @media screen and (min-width: 990px) {
-    .campus-overlay {
-        padding: 24px;
+  .campus-overlay {
+    padding: 24px;
 
-        .campus-title {
-            font-size: 18px;
-        }
-
-        .campus-description {
-            font-size: 15px;
-        }
-
-        .campus-arrow {
-            font-size: 22px;
-        }
+    .campus-title {
+      font-size: 18px;
     }
+
+    .campus-description {
+      font-size: 15px;
+    }
+
+    .campus-arrow {
+      font-size: 22px;
+    }
+  }
 }
 
 // Extra-large (1920px+) with get-vw()
 @media screen and (min-width: 1200px) {
-    .campus-section {
-        padding: get-vw(80px) get-vw(100px);
+  .campus-section {
+    padding: get-vw(80px) get-vw(100px);
+  }
+
+  .campus-grid {
+    gap: get-vw(32px);
+  }
+
+  .campus-overlay {
+    padding: get-vw(28px);
+
+    .campus-title {
+      font-size: get-vw(40px) !important;
     }
 
-    .campus-grid {
-        gap: get-vw(32px);
+    .campus-description {
+      font-size: get-vw(25px) !important;
+    }
+
+    .campus-arrow {
+      font-size: get-vw(24px);
+    }
+  }
+
+  .campus-card {
+    border-radius: get-vw(24px);
+
+    .campus-image {
+      border-radius: get-vw(24px);
     }
 
     .campus-overlay {
-        padding: get-vw(28px);
-
-        .campus-title {
-            font-size: get-vw(40px) !important;
-        }
-
-        .campus-description {
-            font-size: get-vw(25px) !important;
-        }
-
-        .campus-arrow {
-            font-size: get-vw(24px);
-        }
+      border-radius: 0 0 get-vw(24px) get-vw(24px);
     }
-
-    .campus-card {
-        border-radius: get-vw(24px);
-
-        .campus-image {
-            border-radius: get-vw(24px);
-        }
-
-        .campus-overlay {
-            border-radius: 0 0 get-vw(24px) get-vw(24px);
-        }
-    }
+  }
 }

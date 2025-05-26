@@ -2,24 +2,97 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import "./style.scss";
-import { useTheme } from "@/lib/ThemeContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/common/Modal/Modal";
 import InquireForm from "@/components/sections/InquireForm/InquireForm";
+import { FaArrowRight } from "react-icons/fa";
+import { graphQLClient } from "@/lib/graphql-client";
+import { CourseMenuResponse, CourseNode } from "@/common/interfaces/interface";
+import { GET_MENU_COURSE_BY_SLUG_SELECTED } from "@/common/queries/query";
 
 const Header = () => {
-  const pathname = usePathname();
-  const isCoursePage =
-    pathname.includes("/esoft-courses") || pathname.includes("/esoft-transfer");
-
-  const { color } = useTheme();
-
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [hideTimer, setHideTimer] = useState<NodeJS.Timeout | null>(null);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
+  };
+
+  const [facultyArtDesignMenu, setFacultyArtDesignMenu] = useState<
+    CourseNode[]
+  >([]);
+  const [facultyComputingMenu, setFacultyComputingMenu] = useState<
+    CourseNode[]
+  >([]);
+  const [facultyLifeScienceMenu, setFacultyLifeScienceMenu] = useState<
+    CourseNode[]
+  >([]);
+  const [facultyEngineeringMenu, setFacultyEngineeringMenu] = useState<
+    CourseNode[]
+  >([]);
+  const [facultyBusinessLawMenu, setFacultyBusinessLawMenu] = useState<
+    CourseNode[]
+  >([]);
+  const [
+    facultyLanguagesEducationSociologyMenu,
+    setFacultyLanguagesEducationSociologyMenu,
+  ] = useState<CourseNode[]>([]);
+
+  const slugs = [
+    "faculty-of-art-design",
+    "faculty-of-computing",
+    "faculty-of-life-science",
+    "faculty-of-engineering",
+    "faculty-of-business-law",
+    "faculty-of-languages-education-and-sociology",
+  ];
+
+  useEffect(() => {
+    const fetchCourseMenu = async (slug: string) => {
+      const data = await graphQLClient.request<CourseMenuResponse>(
+        GET_MENU_COURSE_BY_SLUG_SELECTED,
+        { slug }
+      );
+
+      const enableCourse = data.schoolType?.courses?.nodes.filter(
+        (course) => course.courses.enableCourseInTheMenu === true
+      );
+
+      switch (slug) {
+        case "faculty-of-art-design":
+          setFacultyArtDesignMenu(enableCourse);
+          break;
+        case "faculty-of-computing":
+          setFacultyComputingMenu(enableCourse);
+          break;
+        case "faculty-of-life-science":
+          setFacultyLifeScienceMenu(enableCourse);
+          break;
+        case "faculty-of-engineering":
+          setFacultyEngineeringMenu(enableCourse);
+          break;
+        case "faculty-of-business-law":
+          setFacultyBusinessLawMenu(enableCourse);
+          break;
+        case "faculty-of-languages-education-and-sociology":
+          setFacultyLanguagesEducationSociologyMenu(enableCourse);
+          break;
+      }
+    };
+
+    slugs.forEach(fetchCourseMenu);
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (hideTimer) clearTimeout(hideTimer);
+    setShowMegaMenu(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timer = setTimeout(() => setShowMegaMenu(false), 300);
+    setHideTimer(timer);
   };
 
   return (
@@ -28,98 +101,18 @@ const Header = () => {
         <div className="top-bar">
           <div className="max-wrap">
             <nav className="navbar navbar-expand-lg nav-menu">
-              {/* Replace with dynamic menu data */}
               <ul className="navbar-nav navbardropdown" id="top-menu">
-                {/* <li>
-                  <Link href="https://esoft.lk/" target="_blank">
-                    Home
-                  </Link>
-                </li> */}
-                {/* <li>
-                  <Link href="https://esoft.lk/about-us/" target="_blank">
-                    About
-                  </Link>
+                <li>
+                  <Link href="/news">News & Events</Link>
                 </li>
                 <li>
-                  <Link href="https://esoft.lk/students-life/" target="_blank">
-                    students life
-                  </Link>
+                  <Link href="/blogs">Blogs</Link>
                 </li>
                 <li>
-                  <Link href="https://esoft.lk/careers/" target="_blank">
-                    careers
-                  </Link>
+                  <Link href="/research">Research</Link>
                 </li>
-                <li>
-                  <Link href="https://esoft.lk/news/" target="_blank">
-                    news & events
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://esoft.lk/blogs/" target="_blank">
-                    blogs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://esoft.lk/research/" target="_blank">
-                    Research
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://esoft.lk/student-loan/" target="_blank">
-                    Scholarship
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://esoft.lk/csr/" target="_blank">
-                    CSR
-                  </Link>
-                </li> */}
-                {/*                 <li>
-                  <Link href="https://esoft.lk/contact-us/" target="_blank">
-                    contact us
-                  </Link>
-                </li> */}
               </ul>
             </nav>
-            <ul className="top-bar-menu">
-              {/* <li>
-                <Link target="_blank" href="https://payments.esoft.lk/">
-                  <Image
-                    src="/images/payment.png"
-                    width={20}
-                    height={20}
-                    alt="Payments"
-                    style={{ objectFit: "contain" }}
-                  />
-                  <span>Payments</span>
-                </Link>
-              </li>
-              <li>
-                <Link target="_blank" href="https://learn.esoft.lk/login">
-                  <Image
-                    src="/images/user.png"
-                    width={20}
-                    height={20}
-                    alt="Students"
-                    style={{ objectFit: "contain" }}
-                  />
-                  <span>Students</span>
-                </Link>
-              </li> 
-               <li>
-                <Link target="_blank" href="https://esoft.lk/alumni/">
-                  <Image
-                    src="/images/alumni.png"
-                    width={20}
-                    height={20}
-                    alt="Alumni"
-                    style={{ objectFit: "contain" }}
-                  />
-                  <span>Alumni</span>
-                </Link>
-              </li> */}
-            </ul>
           </div>
         </div>
 
@@ -133,25 +126,20 @@ const Header = () => {
                     width={150}
                     height={50}
                     alt="Logo"
-                    style={{
-                      width: "100%",
-                      objectFit: "contain",
-                    }}
                     className="desktop-esu-logo"
+                    style={{ width: "100%", objectFit: "contain" }}
                   />
                   <Image
                     src="/images/logo/esu-header.png"
                     width={150}
                     height={50}
                     alt="Logo"
-                    style={{
-                      width: "100%",
-                      objectFit: "contain",
-                    }}
                     className="mobile-esu-logo"
+                    style={{ width: "100%", objectFit: "contain" }}
                   />
                 </Link>
               </div>
+
               <div className="middle-menu">
                 <nav className="navbar navbar-expand-lg nav-menu">
                   <ul className="navbar-nav navbardropdown" id="primary">
@@ -176,6 +164,7 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
+
               <div className="mobile-div hamburger-wrap">
                 <button
                   className="navnavbar-toggler hamburger classic navoffcanvas-header d-flex flex-wrap"
@@ -190,7 +179,7 @@ const Header = () => {
                   <span className="ham-title">MENU</span>
                 </button>
               </div>
-              {/* desktop */}
+
               <div className="apply-now-wrap desktop-only-view">
                 <Modal>
                   <InquireForm />
@@ -198,20 +187,8 @@ const Header = () => {
               </div>
             </div>
           </div>
-          {/* mobile */}
+
           <div className="apply-now-wrap mobile-only-view">
-            {/* <button
-              className="next-btn next-btn--blue"
-              // target="_blank"
-              // href={
-              //   isCoursePage
-              //     ? `https://register.esoft.lk/?id=${"COURSE_ID_DYNAMIC"}`
-              //     : "https://register.esoft.lk/"
-              // }
-              style={{ backgroundColor: color }}
-            >
-              <span>Register Online</span>
-            </button> */}
             <Modal>
               <InquireForm />
             </Modal>
@@ -229,80 +206,31 @@ const Header = () => {
           <nav className="navbar navbar-expand-lg nav-menu">
             <ul className="navbar-nav navbardropdown" id="mobile">
               <li>
-                <Link href="/" onClick={() => (window.location.href = "/")}>
-                  Home
-                </Link>
+                <Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
               </li>
               <li>
-                <Link
-                  href="/about-us"
-                  onClick={() => (window.location.href = "/about-us")}
-                >
-                  About Us
-                </Link>
+                <Link href="/about-us" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
               </li>
               <li>
-                <Link
-                  href="/courses"
-                  onClick={() => (window.location.href = "/courses")}
-                >
-                  Courses
-                </Link>
+                <Link href="/courses" onClick={() => setMobileMenuOpen(false)}>Courses</Link>
               </li>
               <li>
-                <Link
-                  href="/faculties"
-                  onClick={() => (window.location.href = "/faculties")}
-                >
-                  Faculties
-                </Link>
+                <Link href="/faculties" onClick={() => setMobileMenuOpen(false)}>Faculties</Link>
               </li>
               <li>
-                <Link
-                  href="/contact-us"
-                  onClick={() => (window.location.href = "/contact-us")}
-                >
-                  Contact Us
-                </Link>
+                <Link href="/contact-us" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/news" onClick={() => setMobileMenuOpen(false)}>News & Events</Link>
+              </li>
+              <li>
+                <Link href="/blogs" onClick={() => setMobileMenuOpen(false)}>Blogs</Link>
+              </li>
+              <li>
+                <Link href="/research" onClick={() => setMobileMenuOpen(false)}>Research</Link>
               </li>
             </ul>
           </nav>
-          {/* <ul className="top-bar-menu">
-            <li>
-              <Link target="_blank" href="https://register.esoft.lk/">
-                <Image
-                  src="/images/payment.png"
-                  width={20}
-                  height={20}
-                  alt="Payments"
-                  style={{ objectFit: "contain" }}
-                />
-                <span>Payments</span>
-              </Link>
-            </li>
-            <li>
-              <Link target="_blank" href="/students">
-                <Image
-                  src="/images/user.png"
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                <span>Students</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/alumni">
-                <Image
-                  src="/images/alumni.png"
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                <span>Alumni</span>
-              </Link>
-            </li>
-          </ul> */}
         </div>
       </nav>
     </>

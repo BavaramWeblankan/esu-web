@@ -1,0 +1,133 @@
+@import "@/styles/global.scss";
+
+.research-inner-page {
+    padding: 30px 15px;
+    background-color: #fff;
+    color: #333;
+
+    .section-heading {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        letter-spacing: normal;
+        width: 100%;
+    }
+
+    .news-inner-slider {
+        margin-top: 20px;
+
+        .slide-item {
+            img {
+                width: 100%;
+                // height: auto;
+                border-radius: 6px;
+                display: block;
+            }
+        }
+
+        .slick-dots {
+            position: relative;
+            bottom: 0;
+        }
+    }
+
+    .the-content-div {
+        margin-top: 30px;
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+
+            li {
+                margin-bottom: 8px;
+                list-style-type: disc;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+
+            th,
+            td {
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+        }
+
+        .download-list {
+            li {
+                margin-bottom: 10px;
+
+                a {
+                    color: #0073e6;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+    }
+
+    /* Breakpoints */
+    @media screen and (min-width: 768px) {
+        .section-heading {
+            font-size: 28px;
+        }
+    }
+
+    @media screen and (min-width: 990px) {
+        .section-heading {
+            font-size: 32px;
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        .section-heading {
+            font-size: get-vw(42px);
+        }
+
+        .the-content-div {
+            font-size: get-vw(16px);
+        }
+    }
+}
+
+
+.the-content-div ul li::before,
+.date-archive li::before {
+    background-image: url(../../../public/images/tick-red.png);
+}
+
+.date-archive li::before,
+.the-content-div ul li::before {
+    content: "";
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid #d8d8d8;
+    margin-right: 10px;
+    margin-top: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+}

@@ -10,19 +10,19 @@ import { useTheme } from "@/lib/ThemeContext";
 const campuses = [
   {
     name: "Colombo",
-    image: "https://cms.esu.lk/wp-content/uploads/2025/05/shutterstock_2574719137-1-e1747994011891.jpg",
+    image: "/images/about/colombo.jpg",
     description: "Explore ESU Colombo Campus",
     link: "/colombo-campus",
   },
   {
     name: "Kandy",
-    image: "https://cms.esu.lk/wp-content/uploads/2025/05/shutterstock_2535825335-1.jpg",
+    image: "/images/about/kandy.jpg",
     description: "Explore ESU Kandy Campus",
     link: "/kandy-campus",
   },
   {
     name: "Jaffna",
-    image: "https://cms.esu.lk/wp-content/uploads/2025/05/shutterstock_2353370315-1.jpg",
+    image: "/images/about/jaffna.jpg",
     description: "Coming Soon...",
   },
 ];
@@ -32,7 +32,7 @@ const CampusCards = () => {
 
   return (
     <section className="campus-section">
-      <div className="title-wrap">
+      <div className="title-wrap" data-aos="fade-up">
         <TitleLarge title="Our" subtitle=" Campuses" />
         <br />
         <br />
@@ -48,10 +48,9 @@ const CampusCards = () => {
         </p>
       </div>
       <br />
-      <br />
-      <div className="campus-grid">
+      <div className="campus-grid " data-aos="fade-up" >
         {campuses.map((campus, index) => (
-          <div key={index} className="campus-card">
+          <div key={index} className="campus-card ">
             <Link href={campus.link ? `/about-us/${campus.link}` : "#"}>
               <Image
                 src={campus.image}

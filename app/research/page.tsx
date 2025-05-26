@@ -1,253 +1,242 @@
-import React from "react";
-import './style.scss';
+"use client";
+
+import React, { useEffect, useState } from "react";
+import "./style.scss";
+import InnerBanner from "@/components/layout/InnerBanner/InnerBanner";
+import { graphQLClient } from "@/lib/graphql-client";
+import { GET_ALL_PUBLICATIONS } from "@/common/queries/query";
+import Link from "next/link";
+import { useTheme } from "@/lib/ThemeContext";
+import Image from "next/image";
+import Button from "@/components/common/Button/Button";
+import { Publication } from "@/common/interfaces/interface";
 
 const page = () => {
+  const { color } = useTheme();
+
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const featuredPublications = publications.slice(0, 4);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredPublications = publications.filter(
+    (pub) =>
+      pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pub.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const categories = Array.from(
+    new Set(
+      publications
+        .flatMap((pub) => pub.publicationType.nodes || [])
+        .map((type) => `${type.name}|${type.slug}|${type.count}`)
+    )
+  ).map((str) => {
+    const [name, slug, count] = str.split("|");
+    return { name, slug, count };
+  });
+
+  const archives = publications.reduce((acc, pub) => {
+    const date = new Date(pub.date);
+
+    const yearMonth = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}`;
+    acc[yearMonth] = (acc[yearMonth] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const { setColor } = useTheme();
+  useEffect(() => {
+    setColor("rgb(0, 174, 205)");
+  }, [setColor]);
+
+  useEffect(() => {
+    const fetchPublications = async () => {
+      const data = await graphQLClient.request<{
+        publications: {
+          nodes: Publication[];
+        };
+      }>(GET_ALL_PUBLICATIONS);
+
+      // console.log("Publications data:", data);
+      setPublications(data.publications.nodes);
+    };
+
+    fetchPublications();
+  }, []);
+
   return (
-    <section className="simple-padding-bottom simple-padding-top dark-lightmode dark-font-change">
-      <div className="small-middle-wrap">
-        <h2 className="section-heading section-heading--black section-heading--underline section-heading--underline--center">
-          <span>Publications</span>
-        </h2>
-        <div className="landing-wrap-top">
-          <div className="landing-results w-100 landing-results-top">
-            <div>
-              <p id="search-breif">
-                <span id="result-count" /> Search Results for :{" "}
-                <span id="result-keyword">School of Engineering</span>
-              </p>
-            </div>
-            <div>
-              <div className="search-form-ajax">
-                <input
-                  type="text"
-                  name="search-keyword"
-                  className="type-check"
-                  placeholder="Search Courses"
-                  id="search-key"
-                />
-                <button id="search-form-ajax-submit" type="submit">
-                  <img
-                    src="https://esoft.lk/wp-content/themes/esoft_metro_campus/assets/img/ser.png"
-                    alt=""
+    <>
+      <InnerBanner
+        innerPageTitlePrimary={"Research"}
+        innerPageTitleSecondary={"Publications"}
+        innerPageDescription="Research is a vital pillar of ESU’s identity and mission. We foster a research culture that pushes the boundaries of knowledge while solving real-world problems through collaboration and innovation. From sustainability and robotics to international relations and social sciences, our research is defined by its practical application, interdisciplinary scope, and partnerships that create real impact. Through this work, we aim to transform lives and advance society. Welcome to the dynamic realm of research at ESU, where innovation knows no bounds."
+        innerBgDesk="/images/inner-banner.gif"
+        innerBgMobi="/images/inner-banner.gif"
+      />
+
+      <section className="simple-padding-bottom simple-padding-top">
+        <div className="small-middle-wrap">
+          {/* <div className="center-text">
+            <h2 className="section-heading section-heading--underline section-heading--underline--center">
+              <span style={{ color: color }}>Publications</span>
+            </h2>
+          </div> */}
+          <div className="landing-wrap-top">
+            <div className="landing-results w-100 landing-results-top">
+              <div>
+                {searchTerm && (
+                  <p id="search-breif">
+                    <span id="result-count" />
+                    {filteredPublications.length} Search Results for :
+                    <span id="result-keyword">{searchTerm || "All"}</span>
+                  </p>
+                )}
+              </div>
+              <div>
+                <div className="search-form-ajax">
+                  <input
+                    type="text"
+                    name="search-keyword"
+                    className="type-check"
+                    placeholder="Search Publications"
+                    id="search-key"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
-                </button>
+                  <button id="search-form-ajax-submit" type="submit">
+                    <img
+                      src="https://esoft.lk/wp-content/themes/esoft_metro_campus/assets/img/ser.png"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="landing-wrap">
+            <div className="landing-results">
+              <div className="landing-results-inner blog-results-inner">
+                {filteredPublications.map((publication, index) => (
+                  <div
+                    className="school-box-single blog-box news-box-landing"
+                    key={index}
+                  >
+                    <div className="school-box-inner">
+                      <Link href={`/research/${publication.slug}`}>
+                        <Image
+                          className="feature-img-school"
+                          src={publication.featuredImage.node.sourceUrl}
+                          alt={publication.featuredImage.node.altText}
+                          width={500}
+                          height={500}
+                          layout="responsive"
+                        />
+                      </Link>
+                      <div className="school-box-inner-details">
+                        <p className="m-0 aragraph paragraph--black date-p">
+                          {new Intl.DateTimeFormat("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }).format(new Date(publication.date))}
+                        </p>
+                        <Link
+                          href={`/research/${publication.slug}`}
+                          className="school-box-details d-flex"
+                        >
+                          <span style={{ color: color }}>
+                            {publication.title}
+                          </span>
+                        </Link>
+                        <div className="paragraph paragraph--black publication-content">
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                publication.content.length > 600
+                                  ? publication.content.substring(0, 600) +
+                                    "..."
+                                  : "",
+                            }}
+                          />
+                        </div>
+                        <Button
+                          buttonUrl={`/research/${publication.slug}`}
+                          buttonName={"Read More"}
+                        />
+                        {/* <Link
+                          className="btnn-next"
+                          href={`/research/${publication.slug}`}
+                          style={{ background: color }}
+                        >
+                          Read More
+                        </Link> */}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="pagination-div" />
+              </div>
+            </div>
+            <div className="landing-filter blog-filter">
+              <div className="archive-div">
+                <div className="related-coures-div course-title">
+                  <h5>Featured Publications</h5>
+                </div>
+                <div className="the-content-div recent-post-lists">
+                  <ul>
+                    {featuredPublications.map((publication, index) => (
+                      <li key={index}>
+                        <a href={`/research/${publication.slug}`}>
+                          {publication.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="related-coures-div course-title">
+                  <h5>Categories</h5>
+                </div>
+                <div className="the-content-div recent-post-lists">
+                  <ul>
+                    {categories.map((category, index) => (
+                      <li key={index}>
+                        <a href={`/research/${category.slug}`}>
+                          {category.name} ({category.count})
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+{/*                 <div className="related-coures-div course-title">
+                  <h5>Archives</h5>
+                </div> */}
+{/*                 <ul className="date-archive">
+                  {Object.entries(archives).map(([month, count]) => {
+                    const [year, mon] = month.split("-");
+
+                    const monthName = new Date(
+                      `${year}-${mon}-01`
+                    ).toLocaleString("default", {
+                      month: "long",
+                      year: "numeric",
+                    });
+
+                    return (
+                      <li key={month}>
+                        <a href={`#`}>{monthName}</a>
+                        &nbsp;
+                        {/* ({count}) */}
+                      {/* </li> */}
+                 {/*    ); */}
+               {/*    })}
+             /*    </ul> */}
               </div>
             </div>
           </div>
         </div>
-        <div className="landing-wrap">
-          <div className="landing-results">
-            <div className="landing-results-inner blog-results-inner">
-              <div className="school-box-single blog-box news-box-landing">
-                <div className="school-box-inner">
-                  <a href="https://esoft.lk/esoft-publications/biirc-2025/">
-                    <img
-                      className="feature-img-school"
-                      src="https://esoft.lk/wp-content/uploads/2025/05/BIIRC-Logo.jpeg"
-                      alt=""
-                    />
-                  </a>
-                  <div className="school-box-inner-details">
-                    <p className="m-0 aragraph paragraph--black date-p">
-                      May 14, 2025
-                    </p>
-                    <a
-                      href="https://esoft.lk/esoft-publications/biirc-2025/"
-                      className="school-box-details d-flex"
-                    >
-                      <span>BIIRC 2025</span>
-                    </a>
-                    <p className="paragraph paragraph--black">
-                      3rd Business and ICT International Research Conference
-                      (BIIRC) 2025 8th September 2025 “Sustainable Intelligence:
-                      Data and AI for a Resilient Futu[...]
-                    </p>
-                    <a
-                      className="btnn-next"
-                      href="https://esoft.lk/esoft-publications/biirc-2025/"
-                    >
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="school-box-single blog-box news-box-landing">
-                <div className="school-box-inner">
-                  <a href="https://esoft.lk/esoft-publications/research-publication/">
-                    <img
-                      className="feature-img-school"
-                      src="https://esoft.lk/wp-content/uploads/2025/04/ESOFT-Research.png"
-                      alt=""
-                    />
-                  </a>
-                  <div className="school-box-inner-details">
-                    <p className="m-0 aragraph paragraph--black date-p">
-                      April 9, 2025
-                    </p>
-                    <a
-                      href="https://esoft.lk/esoft-publications/research-publication/"
-                      className="school-box-details d-flex"
-                    >
-                      <span>Research Publication</span>
-                    </a>
-                    <p className="paragraph paragraph--black">
-                      Name of the Staff Member Details of the Publication(s)B.
-                      Goonathilaka Goonatillaka, B., Kodithuwakku, C.,
-                      Sandaruwan, A., Wijayarathne, [...]
-                    </p>
-                    <a
-                      className="btnn-next"
-                      href="https://esoft.lk/esoft-publications/research-publication/"
-                    >
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="school-box-single blog-box news-box-landing">
-                <div className="school-box-inner">
-                  <a href="https://esoft.lk/esoft-publications/biirc-2024/">
-                    <img
-                      className="feature-img-school"
-                      src="https://esoft.lk/wp-content/uploads/2023/11/BIIRC-Logo-01-png.png"
-                      alt=""
-                    />
-                  </a>
-                  <div className="school-box-inner-details">
-                    <p className="m-0 aragraph paragraph--black date-p">
-                      March 4, 2024
-                    </p>
-                    <a
-                      href="https://esoft.lk/esoft-publications/biirc-2024/"
-                      className="school-box-details d-flex"
-                    >
-                      <span>BIIRC 2024</span>
-                    </a>
-                    <p className="paragraph paragraph--black">
-                      2nd Business and ICT International Research Conference
-                      (BIIRC) 2024 9th September 2024 “Bridging the Gap:
-                      Exploring the intersection of Technology[...]
-                    </p>
-                    <a
-                      className="btnn-next"
-                      href="https://esoft.lk/esoft-publications/biirc-2024/"
-                    >
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="school-box-single blog-box news-box-landing">
-                <div className="school-box-inner">
-                  <a href="https://esoft.lk/esoft-publications/biirc-2023/">
-                    <img
-                      className="feature-img-school"
-                      src="https://esoft.lk/wp-content/uploads/2023/11/BIIRC-Logo-01-png.png"
-                      alt=""
-                    />
-                  </a>
-                  <div className="school-box-inner-details">
-                    <p className="m-0 aragraph paragraph--black date-p">
-                      November 28, 2023
-                    </p>
-                    <a
-                      href="https://esoft.lk/esoft-publications/biirc-2023/"
-                      className="school-box-details d-flex"
-                    >
-                      <span>BIIRC 2023</span>
-                    </a>
-                    <p className="paragraph paragraph--black">
-                      1st Business and ICT International Research Conference
-                      (BIIRC) 2023 21st June 2023 “Shifting from Pandemic
-                      recovery to resilience” The goal of [...]
-                    </p>
-                    <a
-                      className="btnn-next"
-                      href="https://esoft.lk/esoft-publications/biirc-2023/"
-                    >
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="pagination-div" />
-            </div>
-          </div>
-          <div className="landing-filter blog-filter">
-            <div className="archive-div">
-              <div className="related-coures-div course-title">
-                <h5>Featured Publications</h5>
-              </div>
-              <div className="the-content-div recent-post-lists">
-                <ul>
-                  <li>
-                    <a href="https://esoft.lk/esoft-publications/biirc-2025/">
-                      BIIRC 2025
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://esoft.lk/esoft-publications/research-publication/">
-                      Research Publication
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://esoft.lk/esoft-publications/biirc-2024/">
-                      BIIRC 2024
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://esoft.lk/esoft-publications/biirc-2023/">
-                      BIIRC 2023
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="related-coures-div course-title">
-                <h5>Categories</h5>
-              </div>
-              <div className="the-content-div recent-post-lists">
-                <ul>
-                  <li>
-                    <a href="https://esoft.lk/publication-type/student-life/">
-                      International Research Conference (3)
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="related-coures-div course-title">
-                <h5>Archives</h5>
-              </div>
-              <ul className="date-archive">
-                <li>
-                  <a href="https://esoft.lk/2025/05/?post_type=esoft-publications">
-                    May 2025
-                  </a>
-                  &nbsp;(1)
-                </li>
-                <li>
-                  <a href="https://esoft.lk/2025/04/?post_type=esoft-publications">
-                    April 2025
-                  </a>
-                  &nbsp;(1)
-                </li>
-                <li>
-                  <a href="https://esoft.lk/2024/03/?post_type=esoft-publications">
-                    March 2024
-                  </a>
-                  &nbsp;(1)
-                </li>
-                <li>
-                  <a href="https://esoft.lk/2023/11/?post_type=esoft-publications">
-                    November 2023
-                  </a>
-                  &nbsp;(1)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

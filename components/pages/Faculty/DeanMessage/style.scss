@@ -68,7 +68,7 @@
           @media screen and (min-width: 1024px) {
             .member-image {
               img {
-                max-width: 300px;
+                max-width: 400px;
                 max-height: 360px;
               }
             }
@@ -143,7 +143,7 @@
 
         .single-massage-card {
           margin: 0 get-vw(160px);
-          border-radius: get-vw(19.938px);
+          border-radius: get-vw(20px);
           border: get-vw(0.997px) solid #d9d9d9;
           background: #fff;
 
@@ -151,8 +151,12 @@
             width: get-vw(500px);
             border: 0 solid #d9d9d9;
             margin: 0;
-            padding-left: get-vw(60px);
-            padding-top: get-vw(87px);
+            padding-left: get-vw(50px);
+            padding-top: get-vw(50px);
+            padding-bottom: get-vw(20px);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
 
             .member-details {
               text-align: left;
@@ -196,7 +200,9 @@
             font-style: normal;
             font-weight: 400;
             line-height: get-vw(25px);
-            padding: get-vw(90px) get-vw(151px);
+            // padding: get-vw(90px) get-vw(151px);
+            padding: get-vw(50px) get-vw(50px);
+
           }
         }
       }

@@ -9,7 +9,7 @@ const OurVision = () => {
       <div className="ourvision-section-wrap">
         <div className="ourvision-title-wrap">
           <TitleLarge title="Our" subtitle=" Vision" />
-          <div className="d-flex align-items-center justify-content-between ourvision-image-content">
+          <div className="d-flex align-items-center justify-content-between ourvision-image-content" data-aos="fade-up">
             <Image
               src="/images/contact-head-office.png"
               alt="Head Office"
@@ -17,7 +17,7 @@ const OurVision = () => {
               height={707}
             />
 
-            <div className="our-vision-content">
+            <div className="our-vision-content" data-aos="fade-up">
               <p>
                 To be a nationally leading, globally benchmarked private uni
                 that fosters academic excellence, drives research and

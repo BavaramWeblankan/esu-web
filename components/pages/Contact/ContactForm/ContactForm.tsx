@@ -153,6 +153,7 @@ const ContactForm = () => {
         className="contact-form"
         onSubmit={handleSubmit}
         encType="multipart/form-data"
+        data-aos="fade-up"
       >
         <h2 className="contact-form__title">Get in Touch with us</h2>
         {status === "success" && (

@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/lib/ThemeContext";
 import { useState } from "react";
-import './style.scss'
+import "./style.scss";
 
 interface Module {
   id: number;
@@ -11,63 +11,70 @@ interface Module {
   code: string;
 }
 
-const CustomAccordion = ({ modules }: { modules: Module[] }) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0); // open first by default
+interface Classification {
+  id: number;
+  classification_name: string;
+  modules: Module[];
+}
+
+const CustomAccordion = ({ classifications }: { classifications: Classification[] }) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const { color } = useTheme();
 
   const toggleAccordion = (index: number) => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
 
-  const { color } = useTheme();
-
   return (
     <div className="accordion" id="accordionExample">
-      <div className="accordion-item">
-        <h2 className="accordion-header" id="heading1">
-          <button
-            className={`accordion-button ${
-              activeIndex === 0 ? "" : "collapsed"
-            }`}
-            type="button"
-            onClick={() => toggleAccordion(0)}
-            aria-expanded={activeIndex === 0}
-            aria-controls="collapse1"
-            style={{ backgroundColor: color }}
+      {classifications.map((classification, index) => (
+        <div className="accordion-item" key={classification.id}>
+          <h2 className="accordion-header" id={`heading${index}`}>
+            <button
+              className={`accordion-button ${activeIndex === index ? "" : "collapsed"}`}
+              type="button"
+              onClick={() => toggleAccordion(index)}
+              aria-expanded={activeIndex === index}
+              aria-controls={`collapse${index}`}
+              style={{ backgroundColor: color }}
+            >
+              {classification.classification_name}
+            </button>
+          </h2>
+          <div
+            id={`collapse${index}`}
+            className={`accordion-collapse collapse ${activeIndex === index ? "show" : ""}`}
+            aria-labelledby={`heading${index}`}
           >
-            Modules
-          </button>
-        </h2>
-        <div
-          id="collapse1"
-          className={`accordion-collapse collapse ${
-            activeIndex === 0 ? "show" : ""
-          }`}
-          aria-labelledby="heading1"
-        >
-          <div className="accordion-body">
-            <table className="module-table">
-              <thead>
-                <tr>
-                  <th>Module Code</th>
-                  <th>Module Name</th>
-                  <th className="center-td">Mandatory/Optional</th>
-                </tr>
-              </thead>
-              <tbody>
-                {modules.map((module) => (
-                  <tr key={module.id}>
-                    <td>{module.code}</td>
-                    <td>{module.name}</td>
-                    <td className="center-td">
-                      {module.is_mandatory ? "Mandatory" : "Optional"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="accordion-body">
+              {classification.modules?.length > 0 ? (
+                <table className="module-table">
+                  <thead>
+                    <tr>
+                      <th>Module Code</th>
+                      <th>Module Name</th>
+                      <th className="center-td">Mandatory/Optional</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {classification.modules.map((module) => (
+                      <tr key={module.id}>
+                        <td>{module.code || "-"}</td>
+                        <td>{module.name}</td>
+                        <td className="center-td">
+                          {module.is_mandatory ? "Mandatory" : "Optional"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No modules available.</p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

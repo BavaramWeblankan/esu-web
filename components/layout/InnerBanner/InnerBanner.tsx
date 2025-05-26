@@ -1,21 +1,23 @@
-import React from "react";
+import { ReactNode } from "react";
 import "./style.scss";
-import Image from "next/image";
 
 interface InnerBannerProps {
-  innerPageTitle: string;
+  innerPageTitlePrimary: string;
+  innerPageTitleSecondary: ReactNode;
   innerPageDescription: string;
-  innerBgDesk: string;
-  innerBgMobi: string;
+  innerBgDesk?: string;
+  innerBgMobi?: string;
 }
+
 const InnerBanner: React.FC<InnerBannerProps> = ({
-  innerPageTitle,
+  innerPageTitlePrimary,
+  innerPageTitleSecondary,
   innerPageDescription,
   innerBgDesk,
   innerBgMobi,
 }) => {
   return (
-    <section className="inner-banner position-relative">
+    <section className="inner-banner position-relative"  >
       <div className="full-wrap">
         <div className="inner-banner-image">
           <picture>
@@ -29,7 +31,7 @@ const InnerBanner: React.FC<InnerBannerProps> = ({
               <img
                 src={innerBgMobi}
                 className="d-block w-100"
-                alt={innerPageTitle.replace(/<\/?[^>]+(>|$)/g, "")}
+                alt={`${innerPageTitlePrimary} ${innerPageTitleSecondary}`}
               />
             ) : (
               <img
@@ -41,7 +43,10 @@ const InnerBanner: React.FC<InnerBannerProps> = ({
           </picture>
         </div>
         <div className="inner-banner-content">
-          <h1 dangerouslySetInnerHTML={{ __html: innerPageTitle }}></h1>
+          <h1>
+            {innerPageTitlePrimary}{" "}
+            <span className="highlighted-text">{innerPageTitleSecondary}</span>
+          </h1>
           <div>{innerPageDescription}</div>
         </div>
       </div>

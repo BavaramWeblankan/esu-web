@@ -3,6 +3,7 @@
 .home-courses {
   margin-bottom: 40px;
   overflow: hidden;
+
   .main-wrap-title {
     display: flex;
     flex-direction: column;
@@ -16,6 +17,14 @@
 
   .slider-wrap {
     .courses-slider {
+      // display: flex;
+      // align-items: flex-start;
+      // justify-content: flex-start;
+
+      .slick-track {
+        margin: 0;
+      }
+
       .slick-slide {
         padding: 0 5px;
 
@@ -25,9 +34,10 @@
               position: relative;
 
               .course-box-img {
-                img{
+                img {
                   object-position: top;
                 }
+
                 .course-box-img-content-inner {
                   h6 {
                     font-family: var(--font-poppins);
@@ -92,10 +102,11 @@
 
   @media only screen and (min-width: 992px) {
     .course-box-wrap {
-    width: 100% !important;
-}
+      width: 100% !important;
+    }
 
   }
+
   @media only screen and (min-width: 1200px) {
     margin-bottom: get-vw(100px);
 

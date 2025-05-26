@@ -34,18 +34,18 @@
         color: #fff;
         text-align: center;
         font-weight: 700;
-        font-family: var(--font-space-grotesk);
+        font-family: var(--font-poppins);
         span {
           // color: #02aec9;
           font-weight: 700;
-          font-family: var(--font-space-grotesk);
+          font-family: var(--font-poppins);
         }
       }
       div {
         position: relative;
         color: #fff;
         text-align: center;
-        font-family: var(--font-space-grotesk);
+        font-family: var(--font-manrope);
       }
     }
   }
@@ -83,4 +83,8 @@
       }
     }
   }
+}
+
+.highlighted-text {
+  color: var(--main-title-color, #00aecd); // adjust this color as needed
 }

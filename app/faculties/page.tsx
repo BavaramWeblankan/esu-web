@@ -19,7 +19,10 @@ const Page = () => {
     null
   );
 
-  const { color } = useTheme();
+  const { color, setColor } = useTheme();
+  useEffect(() => {
+    setColor("rgb(0, 174, 205)");
+  }, [setColor]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +56,8 @@ const Page = () => {
     <>
       {
         <InnerBanner
-          innerPageTitle={`Our <span style="color: ${color}">Faculties</span>`}
+          innerPageTitlePrimary={"Our"}
+          innerPageTitleSecondary={"Faculties"}
           innerPageDescription=""
           innerBgDesk="/images/faculties-inner-banner.png"
           innerBgMobi="/images/faculties-inner-banner.png"

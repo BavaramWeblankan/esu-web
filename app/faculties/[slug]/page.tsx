@@ -11,11 +11,13 @@ import { FACULTY_INNER_QUERY } from "@/common/queries/query";
 import { FacultyInner, StaffMemberDetails } from "@/common/types/type";
 import "./style.scss";
 import FacultyCourses from "@/components/pages/Faculty/FacultyCourses/FacultyCourses";
+import HomeTestimonials from "@/components/pages/HomePage/HomeTestimonials/HomeTestimonials";
+import { useTheme } from "@/lib/ThemeContext";
 
 const FacultyInnerPage = () => {
   const pathname = usePathname();
   const slug = pathname?.split("/").pop();
-
+  const { setColor } = useTheme();
   const [faculty, setFaculty] = useState<FacultyInner | null>(null);
   const [deans, setDeans] = useState<StaffMemberDetails[]>([]);
   const [hods, setHods] = useState<StaffMemberDetails[]>([]);
@@ -63,6 +65,13 @@ const FacultyInnerPage = () => {
     hod.schoolTypes?.nodes?.some((node: { slug: string }) => node.slug === slug)
   );
 
+
+  useEffect(() => {
+    if (faculty?.schoolTypesColorFontFields.color) {
+      setColor(faculty.schoolTypesColorFontFields.color);
+    }
+  }, [faculty, setColor]);
+  
   return (
     <>
       {faculty && (
@@ -77,7 +86,12 @@ const FacultyInnerPage = () => {
             }
           >
             <InnerBanner
-              innerPageTitle={`Faculty of <span class="inner-banner-title">${faculty.schoolTypesColorFontFields.facultyName}</span>`}
+              innerPageTitlePrimary={"Faculty of "}
+              innerPageTitleSecondary={
+                <span className="inner-banner-title">
+                  {faculty.schoolTypesColorFontFields.facultyName}
+                </span>
+              }
               innerPageDescription={`Welcome to the Faculty of ${faculty.schoolTypesColorFontFields.facultyName}.`}
               innerBgDesk={
                 faculty.schoolTypesColorFontFields.facultyDesktop?.node?.link ||
@@ -150,6 +164,7 @@ const FacultyInnerPage = () => {
             fontFamily={faculty.schoolTypesColorFontFields.courseFontFamily}
             fontColor={faculty.schoolTypesColorFontFields.color}
           />
+          <HomeTestimonials />
         </>
       )}
     </>

@@ -6,10 +6,17 @@ import HomeBanner from "@/components/pages/HomePage/HomeBanner/HomeBanner";
 import HomeCourses from "@/components/pages/HomePage/HomeCourses/HomeCourses";
 import HomeTestimonials from "@/components/pages/HomePage/HomeTestimonials/HomeTestimonials";
 import HomeDifference from "@/components/pages/HomePage/HomeDifference/HomeDifference";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import HomeNews from "@/components/pages/HomePage/HomeNews/HomeNews";
+import { useTheme } from "@/lib/ThemeContext";
+
 
 export default function Home() {
+  const { setColor } = useTheme();
+  useEffect(() => {
+    setColor("rgb(0, 174, 205)");
+  }, [setColor]);
+   
   return (
     <Fragment>
       <HomeBanner />
@@ -26,8 +33,8 @@ export default function Home() {
       />
       <HomeDifference />
       <HomeCourses />
-      {/* <HomeUniversities /> */}
-      {/* <HomeNews /> */}
+      <HomeUniversities />
+      <HomeNews />
       <HomeTestimonials />
     </Fragment>
   );

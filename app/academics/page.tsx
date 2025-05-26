@@ -22,6 +22,10 @@ export default function CoursesPage() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 12;
+  const { setColor } = useTheme();
+  useEffect(() => {
+    setColor("rgb(0, 174, 205)");
+  }, [setColor]);
 
   useEffect(() => {
     let results = [...allAcademics];
@@ -48,14 +52,24 @@ export default function CoursesPage() {
           staffs: { nodes: Staffs[] };
         }>(GET_ALL_ACADEMIC_STAFF);
 
-        setAllAcademics(data.staffs.nodes); // ✅ correct key: data.staffs.nodes
+        const strategicTeam = [
+          "Dr. Dayan Rajapakse",
+          "Mr. Nishan Sembacuttiaratchy",
+          "Mr. Amila Bandara",
+        ];
+
+        const filteredAcademics = data.staffs.nodes.filter(
+          (staff) => !strategicTeam.includes(staff.title)
+        );
+
+        setAllAcademics(filteredAcademics);
       } catch (error) {
         console.error("Error fetching academics:", error);
       }
     }
 
     fetchAcademics();
-  }, []); // 🔁 Do not use [allAcademics] — that causes an infinite loop
+  }, []);
 
   const totalPages = Math.ceil(filteredAcademics.length / coursesPerPage);
 

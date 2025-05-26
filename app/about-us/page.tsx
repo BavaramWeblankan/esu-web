@@ -1,24 +1,30 @@
+"use client";
 import CampusCards from "@/components/pages/AboutUs/CampusCards/CampusCards";
 import StatsSection from "@/components/pages/AboutUs/StatsSection/StatsSection";
 import InnerBanner from "@/components/layout/InnerBanner/InnerBanner";
-import OurCampus from "@/components/pages/AboutUs/OurCampus/OurCampus";
 import OurVision from "@/components/pages/AboutUs/OurVision/OurVision";
-import ContactHeadOffice from "@/components/pages/Contact/ContactHeadOffice/ContactHeadOffice";
-import HomeAbout from "@/components/pages/HomePage/HomeAbout/HomeAbout";
+import AboutSection from "@/components/pages/AboutUs/AboutSection/AboutSection";
 
-import React from "react";
+import React,{ useEffect } from "react";
 import OurStrategicTeam from "@/components/pages/AboutUs/OurStrategicTeam/OurStrategicTeam";
+import { useTheme } from "@/lib/ThemeContext";
 
 const page = () => {
+  const { setColor } = useTheme();
+  useEffect(() => {
+    setColor("rgb(0, 174, 205)");
+  }, [setColor]);
+
   return (
     <>
       <InnerBanner
-        innerPageTitle={`About <span>Us</span>`}
+        innerPageTitlePrimary={"About"}
+        innerPageTitleSecondary={"Us"}
         innerPageDescription="Welcome to ESU – Sri Lanka's premier uni for higher education excellence! Since our inception in 2000, we have evolved into a leading private uni, offering industry-relevant, globally recognised academic programmes. Our growing academic network spans multiple campuses, empowering students to achieve their full potential across a wide range of disciplines."
         innerBgDesk="/images/inner-banner.gif"
         innerBgMobi="/images/inner-banner.gif"
       />
-      <HomeAbout
+      <AboutSection
         title="Empowering Minds With"
         subtitle="Global Education"
         image="https://esoft.lk/wp-content/uploads/2023/12/About-1.jpg"

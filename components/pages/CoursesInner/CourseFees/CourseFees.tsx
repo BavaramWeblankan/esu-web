@@ -54,12 +54,30 @@ const CourseFees: React.FC<FeesProps> = ({ fees }) => {
   return (
     <div className="course-details-wrapper">
       <div id="section6" className="related-coures-div course-title">
-        <h5><span>Course <span style={{ color }}>Fees</span></span></h5>
-        <div className="toggle-buttons mb-3">
-          <button className={selectedType === "local" ? "active" : ""} onClick={() => setSelectedType("local")}>Local</button>
-          <button className={selectedType === "foreign" ? "active" : ""} onClick={() => setSelectedType("foreign")}>International</button>
+        <div className="d-flex justify-content-between align-items-center w-100 mb-3">
+          <h5>
+          <span>
+            Course <span style={{ color }}>Fees</span>
+          </span>
+        </h5>
+        <div className="toggle-buttons m-0">
+          <button
+            className={selectedType === "local" ? "active" : ""}
+            onClick={() => setSelectedType("local")}
+          >
+            Local
+          </button>
+          <button
+            className={selectedType === "foreign" ? "active" : ""}
+            onClick={() => setSelectedType("foreign")}
+          >
+            International
+          </button>
         </div>
+        </div>
+        <hr className="course-title-hr" />
       </div>
+
       <div>
         <p className="con">
           Total investment is an approximate figure and includes registration

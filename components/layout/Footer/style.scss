@@ -140,6 +140,10 @@
     p {
       margin: 0;
       font-family: var(--font-poppins);
+
+      a {
+        text-decoration: none;
+      }
     }
 
     strong {
@@ -203,6 +207,7 @@
         bottom: 0;
         pointer-events: none;
         user-select: none;
+
         img {
           width: auto;
           height: 200px;
@@ -211,12 +216,13 @@
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .footer {
     .footer-content {
       .background-logo {
         img {
-          width: get-vw(878px);
+          width: get-vw(778px);
           height: get-vw(520px);
           object-fit: cover;
         }

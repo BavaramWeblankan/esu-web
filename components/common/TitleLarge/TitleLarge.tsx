@@ -9,7 +9,7 @@ const TitleLarge: React.FC<TitleInterface> = ({ title, subtitle }) => {
   const { color } = useTheme();
 
   return (
-    <div className="title-wrapper">
+    <div className="title-wrapper"  >
       <div className="main-title-large">
         <h2 style={{ margin: "0px" }}>
           {title} <span style={{ color: color }}>{subtitle}</span>

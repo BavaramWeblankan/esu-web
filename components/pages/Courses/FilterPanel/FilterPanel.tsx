@@ -29,7 +29,7 @@ export default function FilterPanel({ title, options, selected, loading, setSele
         <FilterLoader />
       ) : (
         options.map(option => (
-          <div className="attribute-box-check" key={option.id}>
+          <div className="attribute-box-check" key={option.id} data-aos="fade-up" >
             <input
               className="type-check"
               type="checkbox"

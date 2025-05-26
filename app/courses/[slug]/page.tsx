@@ -32,6 +32,8 @@ const page = () => {
     description?: string;
     name?: string;
     image?: string;
+    is_bundle_course: number;
+    bundle_items: any;
     course_content?: {
       modules?: [];
     };
@@ -44,6 +46,11 @@ const page = () => {
   const [schedule, setSchedule] = useState([]);
   const [courseDetails, setCourseDetails] = useState<Courses | null>(null);
   const [relatedCourses, setRelatedCourses] = useState<RelatedCourses[]>([]);
+
+  const [subCourses, setSubCourses] = useState<any[]>([]);
+  const [subCourseFees, setSubCourseFees] = useState<any[]>([]);
+
+  const [selectedSubCourse, setSelectedSubCourse] = useState(null);
 
   useEffect(() => {
     const school = courseDetails?.schoolTypes?.nodes?.[0];
@@ -59,30 +66,68 @@ const page = () => {
     }
   }, [courseDetails]);
 
+  const fetchCourse = async (courseId: any, main_course: boolean) => {
+    try {
+      const response = await axios.get(
+        `https://publicapi.esoft.lk/api/v1/courses/${courseId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${
+              process.env.NEXT_PUBLIC_API_KEY ||
+              "1100626|VPJcv2Y6wFiHPw4i60xdc1WQ2NMPUQgerXlYhOyI3a07cd1c"
+            }`,
+          },
+        }
+      );
+
+      const data = response.data.data;
+
+      if (main_course) {
+        setCourse(data); // main course set
+      } else {
+        if (!main_course) {
+          setSubCourses((prev) => {
+            const alreadyExists = prev.some((item) => item.id === data.id);
+            if (alreadyExists) return prev;
+            return [...prev, data];
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
+
+  const fetchCourseFees = async (courseId: any) => {
+    try {
+      const response = await axios.get(
+        `https://publicapi.esoft.lk/api/v1/courses/${courseId}/fees?for_entity=esu`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${
+              process.env.NEXT_PUBLIC_API_KEY ||
+              "1100626|VPJcv2Y6wFiHPw4i60xdc1WQ2NMPUQgerXlYhOyI3a07cd1c"
+            }`,
+          },
+        }
+      );
+
+      if (Array.isArray(response.data.data)) {
+        setCourseFees({ fee_plans: response.data.data });
+      } else {
+        setCourseFees(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching course fees:", error);
+    }
+  };
+
   useEffect(() => {
     if (!courseId) return;
-
-    const fetchCourse = async () => {
-      try {
-        const response = await axios.get(
-          `https://publicapi.esoft.lk/api/v1/courses/${courseId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${
-                process.env.NEXT_PUBLIC_API_KEY ||
-                "1100626|VPJcv2Y6wFiHPw4i60xdc1WQ2NMPUQgerXlYhOyI3a07cd1c"
-              }`,
-            },
-          }
-        );
-
-        setCourse(response.data.data);
-      } catch (error) {
-        console.error("Error fetching course data:", error);
-      }
-    };
 
     const fetchCourseDetails = async () => {
       try {
@@ -95,34 +140,6 @@ const page = () => {
         setCourseDetails(response.course);
       } catch (error) {
         console.error("Error fetching course details:", error);
-      }
-    };
-
-    const fetchCourseFees = async () => {
-      try {
-        const response = await axios.get(
-          `https://publicapi.esoft.lk/api/v1/courses/${courseId}/fees?for_entity=esu`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${
-                process.env.NEXT_PUBLIC_API_KEY ||
-                "1100626|VPJcv2Y6wFiHPw4i60xdc1WQ2NMPUQgerXlYhOyI3a07cd1c"
-              }`,
-            },
-          }
-        );
-
-        // setCourseFees(response.data.data);
-        // setCourseFees({ fee_plans: response.data.data });
-        if (Array.isArray(response.data.data)) {
-          setCourseFees({ fee_plans: response.data.data });
-        } else {
-          setCourseFees(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching course fees:", error);
       }
     };
 
@@ -164,12 +181,46 @@ const page = () => {
       }
     };
 
-    fetchCourse();
+    fetchCourse(courseId, true);
     fetchCourseDetails();
-    fetchCourseFees();
+    fetchCourseFees(courseId);
     fetchSchedule();
     fetchRelatedCourses();
   }, [courseId]);
+
+  // console.log("fetchCourse", course);
+
+  useEffect(() => {
+    const fetchedIds = new Set();
+
+    const fetchBundleItems = () => {
+      if (course?.is_bundle_course !== 1) return;
+
+      course.bundle_items.forEach((item: any) => {
+        if (item?.course_id && !fetchedIds.has(item.course_id)) {
+          fetchedIds.add(item.course_id);
+          fetchCourse(item.course_id, false);
+        }
+      });
+    };
+
+    fetchBundleItems();
+  }, [course]);
+
+  useEffect(() => {
+    if (subCourses.length > 0 && !selectedSubCourse) {
+      setSelectedSubCourse(subCourses[0].name);
+    }
+  }, [subCourses]);
+
+  // console.log("Main course:", course);
+  // console.log("Bundle sub-courses:", subCourses);
+
+  const selectCourse = subCourses.find((sc) => sc.name === selectedSubCourse);
+
+  // console.log("subCourses", subCourses);
+
+  // console.log("selectCourse insaf", selectCourse);
 
   return (
     <>
@@ -178,7 +229,7 @@ const page = () => {
       <section className="simple-padding-bottom dark-lightmode dark-font-change">
         <div className="course-wrap">
           <div className="left-course">
-            <div className="left-course-img">
+            <div className="left-course-img" data-aos="flip-left">
               {courseDetails?.featuredImage?.node?.mediaItemUrl && (
                 <img
                   src={courseDetails.featuredImage.node.mediaItemUrl}
@@ -186,7 +237,7 @@ const page = () => {
                 />
               )}
             </div>
-            <div className="left-course-details">
+            <div className="left-course-details" data-aos="fade-up">
               <div className="d-flex justify-content-center course-btn-wrap">
                 <Modal>
                   <InquireForm />
@@ -227,9 +278,10 @@ const page = () => {
             >
               <div className="d-flex course-details-bar-details">
                 <div className="course-details-partner-logo">
-                  {course?.image && (
-                    <img src={course?.image || ""} alt={course?.name || ""} />
-                  )}
+                  {course?.image &&
+                    course?.image != "/images/placeholder.png" && (
+                      <img src={course?.image || ""} alt={course?.name || ""} />
+                    )}
                 </div>
                 <div>
                   <p>
@@ -267,10 +319,98 @@ const page = () => {
                 </li>
               </ul> */}
 
-              <CourseOverview course={course || undefined} />
+              {course?.is_bundle_course === 1 && (
+                <div className="hnd-top-up-toogle">
+                  <div className="toggle-buttons mb-3">
+                    {subCourses
+                      ?.slice() // make a shallow copy so we can sort
+                      .sort((a, b) => {
+                        const aName = a.name.toLowerCase();
+                        const bName = b.name.toLowerCase();
 
-              {/* <CourseOutline modules={course?.course_content?.modules || undefined} /> */}
-              <CourseOutline modules={course?.course_content?.modules || []} />
+                        const aIsHND = aName.includes("hnd") ? -1 : 1;
+                        const bIsHND = bName.includes("hnd") ? -1 : 1;
+
+                        return aIsHND - bIsHND; // HND comes before others
+                      })
+                      .map((subCourse, index) => {
+                        const name = subCourse.name.toLowerCase();
+                        const label = name.includes("hnd")
+                          ? "Year 1 & 2"
+                          : name.includes("top up") || name.includes("top-up")
+                          ? "Year 3 (TOP UP)"
+                          : subCourse.name;
+
+                        return (
+                          <button
+                            key={index}
+                            className={
+                              selectedSubCourse === subCourse.name
+                                ? "active"
+                                : ""
+                            }
+                            onClick={() => setSelectedSubCourse(subCourse.name)}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+
+              <div
+                className="course-details-wrapper course-description-wrapper"
+                data-aos="zoom-in"
+              >
+                <div id="section1" className="related-coures-div course-title">
+                  <h5>
+                    <span>
+                      Course <span style={{ color }}>Overview</span>
+                    </span>
+                  </h5>
+                  <hr className="course-title-hr" />
+                </div>
+                <div
+                  className="the-content-div"
+                  dangerouslySetInnerHTML={{
+                    __html: course?.description || "",
+                  }}
+                />
+              </div>
+
+              {/* {selectCourse && (
+                <CourseOverview course={selectCourse || undefined} />
+              )} */}
+
+              {course?.is_bundle_course !== 1 ? (
+                <CourseOutline
+                  classifications={[
+                    {
+                      id: 0,
+                      classification_name: "Modules",
+                      modules: course?.course_content?.modules || [],
+                    },
+                  ]}
+                />
+              ) : (
+                <CourseOutline
+                  classifications={
+                    Array.isArray(
+                      selectCourse?.course_content?.classifications
+                    ) && selectCourse.course_content.classifications.length > 0
+                      ? selectCourse.course_content.classifications
+                      : [
+                          {
+                            id: 0,
+                            classification_name: "Modules",
+                            modules:
+                              selectCourse?.course_content?.modules || [],
+                          },
+                        ]
+                  }
+                />
+              )}
 
               <CourseSchedule schedule={schedule} />
               {/* ------------------------------------------------ */}

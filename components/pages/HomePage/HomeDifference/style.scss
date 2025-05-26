@@ -37,11 +37,11 @@
       }
 
       .difference-image {
+        position: relative;
         .difference-img {
           width: 100%;
           height: auto;
-          border-radius: 12px;
-          object-fit: cover;
+          border-radius: 0 0 12px 12px;
         }
       }
     }
@@ -52,7 +52,6 @@
 }
 
 @media only screen and (min-width: 768px) {
-  
   .home-difference-section {
     .home-difference-wrap {
       font-family: var(--font-manrope);
@@ -63,15 +62,15 @@
       border: 0;
       border-radius: 20px;
       padding-bottom: 40px;
-      
+
       .single-difference:not(:first-of-type) {
         display: block !important;
       }
-      
+
       .single-difference:not(:nth-of-type(1)):not(:nth-of-type(2)) {
         display: none !important;
       }
-      
+
       .single-difference {
         width: 49%;
         background: #fff;
@@ -79,7 +78,7 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
         min-height: 320px;
         overflow-y: auto;
-        
+
         .difference-text {
           margin-bottom: 30px;
           p {
@@ -92,11 +91,10 @@
   }
 }
 @media only screen and (min-width: 992px) {
-  
   .home-difference-section {
     font-family: var(--font-manrope);
     padding: 0 get-vw(120px);
-    
+
     .home-difference-wrap {
       display: flex;
       flex-wrap: wrap;
@@ -106,7 +104,7 @@
       .single-difference:not(:nth-of-type(1)):not(:nth-of-type(2)) {
         display: block !important;
       }
-      
+
       .single-difference {
         width: 32%;
         &.reverse {
@@ -131,7 +129,7 @@
             }
           }
         }
-        
+
         .difference-text {
           min-height: get-vw(430px);
           max-height: get-vw(430px);
@@ -153,7 +151,7 @@
             }
           }
         }
-        
+
         .difference-image {
           border-radius: 0px 0px get-vw(20px) get-vw(20px);
           img {
@@ -167,14 +165,10 @@
 }
 
 @media only screen and (min-width: 1200px) {
-  
   .home-difference-section {
     .home-difference-wrap {
       font-family: var(--font-manrope);
-      
-      .single-difference:not(:nth-of-type(1)):not(:nth-of-type(2)) {
-      }
-      
+
       .single-difference {
         .difference-text {
           .title-wrap {
@@ -184,7 +178,7 @@
                   font-size: get-vw(50px);
                   font-style: normal;
                   font-weight: 700;
-                  line-height: get-vw(45px);
+                  line-height: get-vw(47px);
                   letter-spacing: get-vw(-3px);
                 }
               }
@@ -197,12 +191,6 @@
             line-height: get-vw(30px);
           }
         }
-        
-/*         .difference-image {
-          img {
-          } 
-      }*/
-        
       }
     }
   }

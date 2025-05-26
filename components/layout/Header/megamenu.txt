@@ -1,0 +1,165 @@
+                    <li className="faculties-hover-menu">
+                      <div
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        className="faculties-hover-wrapper"
+                      >
+                        <Link href="/faculties">Faculties</Link>
+                        {showMegaMenu && (
+                          <div className="mega-menu">
+                            <div className="mega-menu-panel">
+                              <div className="mega-column">
+                                <h4>Faculties</h4>
+                                <ul>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-computing">
+                                      Faculty of Computing
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-business-law">
+                                      Faculty of Business & Law
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-life-science">
+                                      Faculty of Life Science
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-engineering">
+                                      Faculty of Engineering
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-art-design">
+                                      Faculty of Art & Design
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/faculties/faculty-of-languages-education-sociology">
+                                      Faculty of Languages, Education &
+                                      Sociology
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </div>
+
+                              <div className="mega-column">
+                                <h4>Foundation</h4>
+                                <ul>
+                                  {/*                                 {facultyComputingMenu.map((item, index) => (
+                                  <li key={index}><Link href={`/courses/${item.slug}`}>{item.title}</Link></li>
+                                ))} */}
+
+                                  <li>
+                                    <Link href="/courses/foundation-year-in-it-kingston-university-uk?id=503&courseId=cG9zdDo0NjEy">
+                                      Foundation Year in IT - Kingston
+                                      University (UK)
+                                    </Link>
+                                  </li>
+                                  {/*              <li>
+                                    <Link href="none"></Link>
+                                  </li>
+                                  <li>
+                                    <Link href="none"></Link>
+                                  </li> */}
+                                  <li>
+                                    <Link href="/courses/foundation-year-in-engineering-kingston-university-uk?id=504&courseId=cG9zdDo0NjE0">
+                                      Foundation Year in Engineering - Kingston
+                                      University (UK)
+                                    </Link>
+                                  </li>
+                                  {/*              <li>
+                                    <Link href="none"></Link>
+                                  </li>
+                                  <li>
+                                    <Link href=""></Link>
+                                  </li> */}
+                                </ul>
+                              </div>
+
+                              <div className="mega-column">
+                                <h4>Undergraduate</h4>
+                                <ul>
+                                  {/*            {facultyBusinessLawMenu.map((item, index) => (
+                                  <li key={index}><Link href={`/courses/${item.slug}`}>{item.title}</Link></li>
+                                ))} */}
+                                  <li>
+                                    <Link href="/courses/bsc-hons-in-computing-london-metropolitan-university-uk?id=548&courseId=cG9zdDo1Nzg1">
+                                      BSc (Hons) in Computing - London
+                                      Metropolitan University (UK)
+                                    </Link>
+                                  </li>
+
+                                  <li>
+                                    <Link href="/courses/bsc-hons-in-banking-and-finance-london-metropolitan-university-uk?id=552&courseId=cG9zdDo1Nzg3">
+                                      BSc (Hons) in Banking and Finance - London
+                                      Metropolitan University (UK)
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/courses/bsc-hons-in-nursing-top-up-london-metropolitan-university-uk?id=519&courseId=cG9zdDo1MTU3">
+                                      BSc (Hons) in Nursing (TOP UP) - London
+                                      Metropolitan University (UK)
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/courses/beng-hons-in-mechanical-engineering-kingston-university-uk?id=556&courseId=cG9zdDo1Nzkx">
+                                      BEng (Hons) in Mechanical Engineering -
+                                      Kingston University (UK)
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="https://esu.lk/courses/british-fashion-degree-hnd-top-up-bundle?id=470&courseId=cG9zdDo0MDgy">
+                                      British Fashion Degree
+                                    </Link>
+                                  </li>
+                                  {/*   <li>
+                                    <Link href=""></Link>
+                                  </li> */}
+                                </ul>
+                              </div>
+
+                              <div className="mega-column">
+                                <h4>Postgraduate</h4>
+                                <ul>
+                                  {/*                                 {facultyLanguagesEducationSociologyMenu.map((item, index) => (
+                                  <li key={index}><Link href={`/courses/${item.slug}`}>{item.title}</Link></li>
+                                ))} */}
+
+                                  <li>
+                                    <Link href="courses/master-of-science-in-software-engineering-kingston-university?id=61&courseId=cG9zdDoyMjU4">
+                                      Master of Science in Software Engineering
+                                      - Kingston University (UK)
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link href="/courses/master-of-business-administration-fintech-london-metropolitan-university-uk?id=342&courseId=cG9zdDoyMzg2">
+                                      Master of Business Administration
+                                      (Fintech) - London Metropolitan University
+                                      (UK)
+                                    </Link>
+                                  </li>
+                                  {/*  <li>
+                                    <Link href="none"></Link>
+                                  </li> */}
+                                  <li>
+                                    <Link href="https://esu.lk/courses/master-of-science-in-mechatronic-systems-kingston-university-uk?id=516&courseId=cG9zdDo1MTk0">
+                                      Master of Science in Mechatronic Systems -
+                                      Kingston University (UK)
+                                    </Link>
+                                  </li>
+                                  {/*      <li>
+                                    <Link href="none"></Link>
+                                  </li>
+                                  <li>
+                                    <Link href=""></Link>
+                                  </li> */}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </li>

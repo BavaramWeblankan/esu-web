@@ -43,9 +43,21 @@
             font-size: 14px;
             outline: none;
         }
-
+        select {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: block;
+        }
         option {
-            color: #000 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100vw;
+         color: #000 !important;
         }
     }
 

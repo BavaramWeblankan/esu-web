@@ -1,0 +1,19 @@
+.news-inner-page {
+    .section-heading {
+        line-height: normal;
+        letter-spacing: normal;
+        font-size: 30px;
+    }
+
+    .slick-dots {
+        position: relative;
+        bottom: 0;
+    }
+
+    .news-inner-slider {
+        img {
+            height: 600px !important;
+            object-fit: cover;
+        }
+    }
+}

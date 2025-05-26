@@ -9,3 +9,16 @@
         padding: get-vw(80px) get-vw(100px);
     }
 }
+
+.members-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // Center the cards
+  gap: 32px;               // Adjust gap as needed
+  margin-top: 32px;
+}
+
+.member-card-item {
+  flex: 0 1 320px;         // Or your preferred card width
+  max-width: 100%;
+}
