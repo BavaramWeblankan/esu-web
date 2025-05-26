@@ -89,6 +89,7 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-KLC9HT5X');
           `}
         </Script>
+        
       </head>
       <body
         className={`
