@@ -96,14 +96,14 @@ const HomeTestimonials: React.FC = () => {
             </div>
           ))}
         </Slider>
-        <div className="testimonial slider-buttons">
+        {/* <div className="testimonial slider-buttons">
             <button className="slider-btn prev" onClick={handlePrev}>
               ‹
             </button>
             <button className="slider-btn next" onClick={handleNext}>
               ›
             </button>
-          </div>
+          </div> */}
       </div>
     </section>
   );

@@ -19,6 +19,7 @@
       .single-massage-card {
         flex-wrap: wrap;
         justify-content: space-between;
+        position: relative; // Add this to enable absolute positioning for children
 
         .single-image-wrap {
           border-radius: 19.938px;
@@ -208,4 +209,37 @@
       }
     }
   }
+}
+
+// Position the campus-arrow as a floating button over the image (top-right)
+.campus-arrow {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  z-index: 2;
+  font-size: 20px;
+  color: #000;
+  background: var(--main-title-color, red);
+  padding: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(315deg);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(194,214,71,0.13);
+  cursor: pointer;
+}
+
+// Ensure the parent is positioned relative for absolute positioning
+.member-image {
+  position: relative;
+}
+
+// On hover, animate the arrow (optional, for consistency)
+.member-card:hover .campus-arrow {
+  transform: rotate(315deg) scale(1.08);
+  box-shadow: 0 2px 8px rgba(194,214,71,0.13);
 }

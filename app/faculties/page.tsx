@@ -80,6 +80,7 @@ const Page = () => {
                 viceChancellor.featuredImage?.node?.altText ||
                 "Vice Chancellor",
             }}
+            slugUrl={viceChancellor?.slug}
             fontFamily={"inherit"} // You can update this if you add font in VC fields
             fontColor={color} // Update if VC fields include color
           />

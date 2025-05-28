@@ -3,6 +3,7 @@
 import React from "react";
 import "./style.scss";
 import Image from "next/image";
+import Link from "next/link";
 
 interface DeanMessageProps {
   title: string;
@@ -15,6 +16,7 @@ interface DeanMessageProps {
   };
   fontFamily: string;
   fontColor: string;
+  slugUrl: string;
 }
 
 const DeanMessage: React.FC<DeanMessageProps> = ({
@@ -23,6 +25,7 @@ const DeanMessage: React.FC<DeanMessageProps> = ({
   designation,
   message,
   featuredImage,
+  slugUrl,
   fontFamily,
   fontColor,
 }) => {
@@ -56,6 +59,16 @@ const DeanMessage: React.FC<DeanMessageProps> = ({
               </h2>
               <div dangerouslySetInnerHTML={{ __html: message }}></div>
             </div>
+            <Link href={`/academics/${slugUrl}`}>
+              <span
+                className="campus-arrow"
+                style={{
+                  // background: color,
+                }}
+              >
+                ➜
+              </span>
+            </Link>
           </div>
         </div>
       </div>

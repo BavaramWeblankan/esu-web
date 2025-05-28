@@ -8,8 +8,8 @@ import Preloader from "@/components/common/Preloader/Preloader";
 import Chatbot from "@/components/sections/Chatbot/Chatbot";
 import InquireForm from "@/components/sections/InquireForm/InquireForm";
 import Modal from "@/components/common/Modal/Modal";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+// import AOS from 'aos';
+// import 'aos/dist/aos.css';
 
 export default function RootLayoutClient({
   children,
@@ -31,10 +31,10 @@ export default function RootLayoutClient({
 
   useEffect(() => {
     // AOS animation init
-    AOS.init({
-      duration: 800,
-      once: false,
-    });
+    // AOS.init({
+    //   duration: 800,
+    //   once: false,
+    // });
   }, []);
 
   return isLoading ? (

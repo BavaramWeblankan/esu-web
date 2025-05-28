@@ -2,6 +2,7 @@ import React from "react";
 import "./style.scss";
 import Image from "next/image";
 import { StaffMember } from "@/common/types/type";
+import Link from "next/link";
 
 interface Props {
   memberData: StaffMember;
@@ -16,7 +17,7 @@ const MemberCardItem: React.FC<Props> = ({ memberData }) => {
 
   return (
     <div className="single-massage-card d-flex member-card" data-aos="flip-left">
-      <a href={`/academics/${SlugUrl}`} className="single-image-wrap">
+      <div className="single-image-wrap">
         <div className="member-details">
           <h3 className="name">{MemberName}</h3>
           <h4 className="position">{MemberDesignation}</h4>
@@ -29,8 +30,21 @@ const MemberCardItem: React.FC<Props> = ({ memberData }) => {
             width={500}
             height={500}
           />
-        </div>
-      </a>
+           <div className="d-flex align-items-center justify-content-between">
+              
+                  <Link href={`/academics/${SlugUrl}`}>
+                    <span
+                      className="campus-arrow"
+                      style={{
+                        // background: color,
+                      }}
+                    >
+                      ➜
+                    </span>
+                 </Link>
+              </div>
+            </div>
+      </div>
     </div>
   );
 };

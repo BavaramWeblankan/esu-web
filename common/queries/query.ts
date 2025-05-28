@@ -491,6 +491,7 @@ export const VICE_CHANCELLOR_QUERY = `
             message
             viceChancellorMessage
           }
+          slug
           title
           featuredImage {
             node {

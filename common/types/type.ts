@@ -127,6 +127,7 @@ export type StaffMemberDetails = {
 
 export type ViceChancellor = {
   title: string;
+  slug: string;
   staffAcf: {
     designation: string;
     message: string;
