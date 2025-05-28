@@ -404,3 +404,23 @@ export type CoursesInquire = {
     };
   };
 };
+
+// Event type for GraphQL events query
+export type EventNode = {
+  eventId: number;
+  date: string;
+  slug: string;
+  title: string;
+  events: {
+    color: string;
+    date: string;
+    isUpcommingEvent: boolean;
+  };
+  link: string;
+};
+
+export type Events = {
+  events: {
+    nodes: EventNode[];
+  };
+};

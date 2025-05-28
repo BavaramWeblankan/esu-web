@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import Image from "next/image";
 import "./style.scss";
 import TitleLarge from "@/components/common/TitleLarge/TitleLarge";
+import { Events } from "@/common/interfaces/interface";
+import { EVENTS } from "@/common/queries/query";
+import { graphQLClient } from "@/lib/graphql-client";
 
 const events = [
 	{
@@ -21,6 +24,22 @@ const events = [
 ];
 
 const HomeUpcomingEvents = () => {
+  // const [events, setEvents] = useState<Events[]>([]);
+  // const fetchNewsEvents = async () => {
+  //     const data = await graphQLClient.request<{
+  //       news: {
+  //         nodes: Events[];
+  //         pageInfo: { endCursor: string; hasNextPage: boolean };
+  //       };
+  //     }>(EVENTS);
+  //     setEvents(data.news.nodes);
+  //   };
+  
+  // useEffect(() => {
+  //   fetchNewsEvents();
+  // }, []);
+
+
 	const [selectedDate, setSelectedDate] = useState(() => {
 		// If there are events, set selectedDate to the month of the first event
 		if (events.length > 0) {
@@ -32,22 +51,22 @@ const HomeUpcomingEvents = () => {
 	});
 
 	const tileContent = ({ date, view }: { date: Date; view: string }) => {
-  // No bullet, just return null
-  return null;
-};
+    // No bullet, just return null
+    return null;
+  };
 
-const tileClassName = ({ date, view }: { date: Date; view: string }) => {
-  if (view === "month") {
-    const event = events.find(ev =>
-      ev.date.getFullYear() === date.getFullYear() &&
-      ev.date.getMonth() === date.getMonth() &&
-      ev.date.getDate() === date.getDate()
-    );
-    // Return a unique class for each event color
-    return event ? `has-event has-event-${event.color.replace('#', '')}` : null;
-  }
-  return null;
-};
+  const tileClassName = ({ date, view }: { date: Date; view: string }) => {
+    if (view === "month") {
+      const event = events.find(ev =>
+        ev.date.getFullYear() === date.getFullYear() &&
+        ev.date.getMonth() === date.getMonth() &&
+        ev.date.getDate() === date.getDate()
+      );
+      // Return a unique class for each event color
+      return event ? `has-event has-event-${event.color.replace('#', '')}` : null;
+    }
+    return null;
+  };
 
 	return (
 		<section className="upcoming-events-section">
@@ -69,30 +88,30 @@ const tileClassName = ({ date, view }: { date: Date; view: string }) => {
 						</div>
 						<div className="event-list">
 							{events.map((event, idx) => {
-	const dayNum = event.date.getDate();
-	const weekday = event.date.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
-	const month = event.date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
-	const year = event.date.getFullYear();
-	return (
-		<React.Fragment key={idx}>
-			<div className="event-item">
-				<div className="dot" style={{ backgroundColor: event.color }}></div>
-				<div className="event-date-label">
-					<span className="event-day">{dayNum}</span>
-					{/* <span className="event-weekday" style={{ marginLeft: 4 }}>{weekday}</span> */}
-					<span className="event-month" style={{ marginLeft: 8 }}>{month}</span>
-					{/* <span className="event-year" style={{ marginLeft: 4 }}>{year}</span> */}
-				</div>
-				<div className="details">
-					<strong>{event.title}</strong>
-				</div>
-			</div>
-			{idx !== events.length - 1 && (
-				<div className="event-divider" />
-			)}
-		</React.Fragment>
-	);
-})}
+                const dayNum = event.date.getDate();
+                const weekday = event.date.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
+                const month = event.date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+                const year = event.date.getFullYear();
+                return (
+                  <React.Fragment key={idx}>
+                    <div className="event-item">
+                      <div className="dot" style={{ backgroundColor: event.color }}></div>
+                      <div className="event-date-label">
+                        <span className="event-day">{dayNum}</span>
+                        {/* <span className="event-weekday" style={{ marginLeft: 4 }}>{weekday}</span> */}
+                        <span className="event-month" style={{ marginLeft: 8 }}>{month}</span>
+                        {/* <span className="event-year" style={{ marginLeft: 4 }}>{year}</span> */}
+                      </div>
+                      <div className="details">
+                        <strong>{event.title}</strong>
+                      </div>
+                    </div>
+                    {idx !== events.length - 1 && (
+                      <div className="event-divider" />
+                    )}
+                  </React.Fragment>
+                );
+              })}
 						</div>
 					</div>
 				</div>

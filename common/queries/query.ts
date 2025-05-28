@@ -989,3 +989,22 @@ query($slug: ID!) {
 //   }
 // }
 // `;
+
+export const EVENTS = `
+query {
+  events {
+    nodes {
+      eventId
+      date
+      slug
+      title
+      events {
+        color
+        date
+        isUpcommingEvent
+      }
+      link
+    }
+  }
+}
+`;

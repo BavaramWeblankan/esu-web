@@ -148,3 +148,22 @@ export interface CourseMenuResponse {
     };
   };
 }
+
+export interface EventNode {
+  eventId: number;
+  date: string;
+  slug: string;
+  title: string;
+  events: {
+    color: string;
+    date: string;
+    isUpcommingEvent: boolean;
+  };
+  link: string;
+}
+
+export interface Events {
+  events: {
+    nodes: EventNode[];
+  };
+}
