@@ -20,12 +20,12 @@ const AboutMemberCardItem: React.FC<Props> = ({ memberData }) => {
   return (
     <>
       <div
-        className="single-massage-card d-flex member-card"
+        className="single-massage-card d-flex member-card "
         data-aos="flip-left"
         onClick={() => setShowModal(true)}
         style={{ cursor: "pointer" }}
       >
-        <div className="single-image-wrap">
+        <div className="about single-image-wrap">
           <div className="member-details">
             <h3 className="name">{MemberName}</h3>
             <h4 className="position">{MemberDesignation}</h4>

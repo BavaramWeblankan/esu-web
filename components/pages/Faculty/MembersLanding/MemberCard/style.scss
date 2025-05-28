@@ -147,11 +147,16 @@
   padding-right: 10px;
 }
 
+
 .member-card {
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-
+  
+  .about{
+    background: #333c40 !important;
+    color: #fff !important;
+  }
   .single-image-wrap {
     border-radius: 19.938px;
     border: 0.997px solid #d9d9d9;
@@ -203,7 +208,6 @@
     font-style: normal;
     font-weight: 400;
     padding: 0 20px;
-    text-align: justify;
   }
 }
 
@@ -431,37 +435,4 @@
       }
     }
   }
-}
-
-// Position the campus-arrow as a floating button over the image (top-right)
-.campus-arrow {
-  position: absolute;
-  bottom: 11px;
-  right: 11px;
-  z-index: 2;
-  font-size: 20px;
-  color: #000;
-  background: var(--main-title-color, red);
-  padding: 10px;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: rotate(315deg);
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(194,214,71,0.13);
-  cursor: pointer;
-}
-
-// Ensure the parent is positioned relative for absolute positioning
-.member-image {
-  position: relative;
-}
-
-// On hover, animate the arrow (optional, for consistency)
-.member-card:hover .campus-arrow {
-  transform: rotate(315deg) scale(1.08);
-  box-shadow: 0 2px 8px rgba(194,214,71,0.13);
 }

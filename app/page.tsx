@@ -9,6 +9,7 @@ import HomeDifference from "@/components/pages/HomePage/HomeDifference/HomeDiffe
 import { Fragment, useEffect } from "react";
 import HomeNews from "@/components/pages/HomePage/HomeNews/HomeNews";
 import { useTheme } from "@/lib/ThemeContext";
+import HomeUpcomingEvents from "@/components/pages/HomePage/HomeUpcomingEvents/HomeUpcomingEvents";
 
 
 export default function Home() {
@@ -35,6 +36,7 @@ export default function Home() {
       <HomeCourses />
       <HomeUniversities />
       <HomeNews />
+      <HomeUpcomingEvents />
       <HomeTestimonials />
     </Fragment>
   );
