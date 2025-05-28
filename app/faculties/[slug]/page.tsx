@@ -128,6 +128,7 @@ const FacultyInnerPage = () => {
                 )?.schoolTypesColorFontFields?.courseFontFamily ??
                 faculty.schoolTypesColorFontFields.courseFontFamily
               }
+               slugUrl={matchingDean?.slug}
               fontColor={
                 matchingDean.schoolTypes?.nodes?.find(
                   (node: { slug: string }) => node.slug === slug
@@ -149,6 +150,7 @@ const FacultyInnerPage = () => {
                 )?.schoolTypesColorFontFields?.courseFontFamily ??
                 faculty.schoolTypesColorFontFields.courseFontFamily
               }
+              slugUrl={matchingHOD?.slug}
               fontColor={
                 matchingHOD.schoolTypes?.nodes?.find(
                   (node: { slug: string }) => node.slug === slug

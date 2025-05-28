@@ -75,6 +75,7 @@ export type FacultyInner = {
 // app/faculties/[slug]/page.tsx
 export type StaffMemberDetails = {
   title: string;
+  slug: string;
   staffAcf: {
     designation: string;
     message: string;

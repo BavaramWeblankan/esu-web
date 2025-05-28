@@ -421,6 +421,7 @@ export const FACULTY_INNER_QUERY = `
       staffs {
         nodes {
           title
+          slug
           staffAcf {
             designation
             message
@@ -452,6 +453,7 @@ export const FACULTY_INNER_QUERY = `
       staffs {
         nodes {
           title
+          slug
           staffAcf {
             designation
             message

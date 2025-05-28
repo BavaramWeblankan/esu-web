@@ -59,8 +59,8 @@ const Page = () => {
           innerPageTitlePrimary={"Our"}
           innerPageTitleSecondary={"Faculties"}
           innerPageDescription=""
-          innerBgDesk="/images/faculties-inner-banner.png"
-          innerBgMobi="/images/faculties-inner-banner.png"
+          innerBgDesk="/images/inner-banner.gif"
+          innerBgMobi="/images/inner-banner.gif"
         />
       }
 
